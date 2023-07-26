@@ -3,6 +3,8 @@
 # dependencies
 /backRate/node_modules
 /frontRate/node_modules
+/backRate/package-lock.json
+/frontRate/package-lock.json
 /.pnp
 .pnp.js
 
