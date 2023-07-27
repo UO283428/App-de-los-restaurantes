@@ -1,12 +1,26 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 
-function Image() {
+function Image({ src, alt }) {
     return (
-      <img
-        className="Image"
-        src="https://example.com/image.png"
-        alt="Example Image"
-      />
+      <div className="image-container">
+        <img
+          className="Image"
+          src={src}
+          alt={alt}
+        />
+      </div>
     );
-  }
-  
-  export default Image;
+}
+
+// Prop types validation
+Image.propTypes = {
+    src: PropTypes.string.isRequired,
+    alt: PropTypes.string,
+};
+
+Image.defaultProps = {
+    alt: '', // default value if alt prop isn't provided
+};
+
+export default Image;

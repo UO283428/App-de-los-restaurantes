@@ -1,6 +1,12 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 
-function Text() {
-    return <p className="Text">Example Text</p>;
-  }
-  
-  export default Text;
+function Text({ content }) {
+    return <p className="Text">{content}</p>;
+}
+
+Text.propTypes = {
+    content: PropTypes.string.isRequired,
+};
+
+export default Text;

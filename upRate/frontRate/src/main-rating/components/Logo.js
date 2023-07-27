@@ -1,12 +1,25 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 
-function Logo() {
+function Logo({ src, alt }) {
     return (
-      <img
-        className="Logo"
-        src="https://example.com/logo.png"
-        alt="Example Logo"
-      />
+      <div className="logo-container">
+        <img
+          className="Logo"
+          src={src}
+          alt={alt}
+        />
+      </div>
     );
-  }
+}
 
-  export default Logo;
+Logo.propTypes = {
+    src: PropTypes.string.isRequired,
+    alt: PropTypes.string,
+};
+
+Logo.defaultProps = {
+    alt: '',
+};
+
+export default Logo;
