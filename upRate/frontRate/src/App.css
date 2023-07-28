@@ -1,9 +1,24 @@
-/*
-.app {
-  margin: 0;
-  padding: 0;
-  width: 100%;
+html, body {
+  background-color: black;
+  display: flex; /* Añadido para permitir el uso de flexbox */
+  flex-direction: column; /* Alinea los elementos verticalmente */
+  align-items: center; /* Centra los elementos horizontalmente */
+  justify-content: space-around; /* Distribuye el espacio alrededor de los elementos */
+  overflow: auto; /* Permite el desplazamiento si el contenido es demasiado grande */
 }
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+  justify-content: flex-start; /* align content to the top */
+  position: relative;
+  /* other styles */
+}
+
 
 .review-form {
   width: 100%;
@@ -11,8 +26,10 @@
 }
 
 .front-page-image {
-  width: 50%;
-  height: 50%;
+  position: relative; 
+  height: 49vh;
+  width: 100%;
+  object-fit: cover;
 }
 
 .logo-image{
@@ -21,33 +38,15 @@
 }
 
 .text-content {
-  width: 50%;
-  height: 50%;
   color: #ffffff;
 }
-*/
 
 /* Global Styles */
 body {
   font-family: Arial, sans-serif; /* Beautiful font */
 }
 
-/* App container styling */
-.app {
-  background-color: black;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
 /* Image Styling */
-.front-page-image {
-  position: relative; /* Add relative position */
-}
-
 .front-page-image::after {
   content: "";
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, black 100%);
@@ -60,52 +59,62 @@ body {
 
 .front-page-image .Image {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover; /* Cambiado de "fill" a "cover" para mantener las proporciones */
 }
 
 /* Logo Styling */
 .logo-image {
-  position: relative;
-  width: 30%;
+  position: absolute;
+  width: 120px; /* Adjust size as needed */
+  height: 120px; /* Adjust size as needed */
   margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  top: 50%; /* Centra el logo verticalmente */
+  left: 50%; /* Centra el logo horizontalmente */
+  transform: translate(-50%, -50%); /* Asegura que el centro del logo esté en el centro de la pantalla */
 }
 
 .logo-image::before {
   content: "";
   position: absolute;
-  top: 50%; 
-  left: 50%;
-  bottom: 50%;
-  right: 50%;
-  width: 90%; /* Adjust size as needed */
-  height: 90%; /* Adjust size as needed */
+  top: 10%; /* Adjust position as needed */
+  left: 10%; /* Adjust position as needed */
+  width: 80%; /* Adjust size as needed */
+  height: 80%; /* Adjust size as needed */
   background-color: white;
   border-radius: 50%;
   z-index: 0; /* Make sure the white circle is behind the logo */
-  transform: translate(-50%, -50%); /* Center the circle */
 }
 
 .logo-image .Logo {
   position: relative;
-  width: 100%;
-  height: auto;
   z-index: 1; /* Make sure the logo is above the white circle */
+  width: 90%; /* Adjust size as needed */
+  height: auto;
 }
+
 
 
 /* Text content Styling */
 .text-content p {
+  margin-top: 100px;
   font-size: 2em; /* Increased text size */
   text-align: center;
   color: white;
-  margin-bottom: 2vh; /* Space between text and rating stars */
+  /*margin-bottom: 2vh; Space between text and rating stars */
 }
 
 /* Rating stars Styling */
 .rating-icons {
   display: flex;
+  border: 0px;
   justify-content: space-around;
-  margin-bottom: 5vh; /* Space between rating stars and submit button */
+  /* margin-bottom:  5vh; /* Space between rating stars and submit button */
+
 }
 
 .star {
@@ -114,28 +123,55 @@ body {
 }
 
 /* Button Styling */
+/* Button Styling */
 .submit-button {
   background-color: lightblue;
   color: white;
   border: none;
   padding: 1em 2em;
-  border-radius: 5px;
+  border-radius: 20px; /* Hace el botón más redondeado */
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  display: block; /* Hace que el botón sea un bloque para poder centrarlo */
+  margin: auto; /* Centra el botón */
 }
 
-/* Responsive Design */
+.submit-button:hover {
+  background-color: darkblue; /* Cambia el color del botón cuando se pasa el cursor sobre él */
+}
+
+.rating-container {
+  flex-grow: 1; /* grow to take up remaining space */
+  width: 100%;
+  display: flex; /* Añadido para permitir el uso de flexbox */
+  flex-direction: column; /* Alinea los elementos verticalmente */
+  align-items: center; /* Centra los elementos horizontalmente */
+  justify-content: flex-start; /* align content to the top */
+  overflow: auto; /* Permite el desplazamiento si el contenido es demasiado grande */
+}
+
 @media (max-width: 600px) {
-  .review-form {
+  .rating-container {
+    /*
       padding: 10px;
+      */
   }
-  
+
   .text-content p {
       font-size: 1.5em;
   }
 
+  .logo-image{
+    padding: 10px;
+  }
   .star {
       width: 15vw;
       height: 15vh;
   }
+
+  .logo-image {
+      width: 100px; /* Adjust size as needed */
+      height: 100px; /* Adjust size as needed */
+  }
 }
+

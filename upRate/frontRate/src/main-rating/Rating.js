@@ -20,9 +20,11 @@ const Rating = () => {
               {/*<Image className="background-image" src="https://www.justretail.news/wp-content/uploads/2021/08/Goiko-H2O-noticias-retail-2-scaled.jpg" alt="Example Image" />*/}
               <Image className="front-page-image" src="https://www.justretail.news/wp-content/uploads/2021/08/Goiko-H2O-noticias-retail-2-scaled.jpg" alt="Example Image" />
               <Logo className="logo-image" src="https://retailres.com/wp-content/uploads/2020/10/GOIKO-1-1024x465.png" alt="Example Logo" />
-              <Text className="text-content" content="Rate the restaurant" />
-              <CustomStarIcon className="rating-icons" setRating={setRating}/>
-              <input type="submit" className="submit-button" value="Enviar reseña" />
+              <div className="rating-container">
+                <Text className="text-content" content="Rate the restaurant" />
+                <CustomStarIcon className="rating-icons" setRating={setRating}/>
+                <input type="submit" className="submit-button" value="Enviar reseña" />
+              </div>
           </form>
       </div>
   );
