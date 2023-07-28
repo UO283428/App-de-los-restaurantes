@@ -1,99 +1,141 @@
-/* General Styling */
-body, html {
+/*
+.app {
   margin: 0;
   padding: 0;
-  height: 100%;
-  font-family: 'Roboto', sans-serif; /* Modern font */
+  width: 100%;
 }
 
-.app, .review-form {
-  background: black;
-  height: 100%;
+.review-form {
+  width: 100%;
+  background-color: #000000;
+}
+
+.front-page-image {
+  width: 50%;
+  height: 50%;
+}
+
+.logo-image{
+  width: 10%;
+  height: 10%;
+}
+
+.text-content {
+  width: 50%;
+  height: 50%;
+  color: #ffffff;
+}
+*/
+
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif; /* Beautiful font */
+}
+
+/* App container styling */
+.app {
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
-/* Background Image Styling */
-.background-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  z-index: -1;
+/* Image Styling */
+.front-page-image {
+  position: relative; /* Add relative position */
 }
 
-.background-image::after {
+.front-page-image::after {
   content: "";
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, black 100%);
   position: absolute;
   top: 0;
+  right: 0;
+  bottom: 0;
   left: 0;
-  height: 100%;
+}
+
+.front-page-image .Image {
   width: 100%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1));
+  height: auto;
 }
 
 /* Logo Styling */
 .logo-image {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
+  position: relative;
+  width: 30%;
+  margin: auto;
+}
+
+.logo-image::before {
+  content: "";
+  position: absolute;
+  top: 50%; 
+  left: 50%;
+  bottom: 50%;
+  right: 50%;
+  width: 90%; /* Adjust size as needed */
+  height: 90%; /* Adjust size as needed */
+  background-color: white;
   border-radius: 50%;
-  border: 2px solid white;
-  align-self: flex-end;
+  z-index: 0; /* Make sure the white circle is behind the logo */
+  transform: translate(-50%, -50%); /* Center the circle */
 }
 
-/* Text Styling */
-.text-content {
-  color: white;
+.logo-image .Logo {
+  position: relative;
+  width: 100%;
+  height: auto;
+  z-index: 1; /* Make sure the logo is above the white circle */
+}
+
+
+/* Text content Styling */
+.text-content p {
+  font-size: 2em; /* Increased text size */
   text-align: center;
-  font-size: 1.5em;
+  color: white;
+  margin-bottom: 2vh; /* Space between text and rating stars */
 }
 
-/* Rating Stars Styling */
+/* Rating stars Styling */
 .rating-icons {
-  font-size: 1em;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 5vh; /* Space between rating stars and submit button */
+}
+
+.star {
+  width: 20vw;
+  height: 20vh;
 }
 
 /* Button Styling */
 .submit-button {
   background-color: lightblue;
-  border: none;
   color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  border: none;
+  padding: 1em 2em;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 /* Responsive Design */
-@media screen and (max-width: 600px) {
-  .background-image {
-    object-fit: contain; /* Adjusts the image size */
+@media (max-width: 600px) {
+  .review-form {
+      padding: 10px;
+  }
+  
+  .text-content p {
+      font-size: 1.5em;
   }
 
-  .logo-image {
-    width: 50px;
-    height: 50px;
-  }
-
-  .text-content {
-    font-size: 1em;
-  }
-
-  .rating-icons {
-    font-size: 0.6em; /* Makes the stars smaller */
-  }
-
-  .submit-button {
-    padding: 10px 20px;
-    font-size: 14px;
+  .star {
+      width: 15vw;
+      height: 15vh;
   }
 }

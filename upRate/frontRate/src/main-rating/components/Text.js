@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Text({ content }) {
-    return <p className="Text">{content}</p>;
+function Text({ content, className }) {
+    return (
+    <div className= {className}>
+        <p>{content}</p>
+    </div>
+    );
 }
 
 Text.propTypes = {

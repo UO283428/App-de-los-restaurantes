@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Image({ src, alt }) {
+function Image({ src, alt, className }) {
     return (
-      <div className="image-container">
+      <div className={className}>
         <img
           className="Image"
           src={src}
