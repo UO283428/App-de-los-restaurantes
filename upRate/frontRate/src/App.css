@@ -32,10 +32,6 @@ html, body {
   object-fit: cover;
 }
 
-.logo-image{
-  width: 10%;
-  height: 10%;
-}
 
 .text-content {
   color: #ffffff;
@@ -66,13 +62,8 @@ body {
 /* Logo Styling */
 .logo-image {
   position: absolute;
-  width: 120px; /* Adjust size as needed */
-  height: 120px; /* Adjust size as needed */
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  width: 140px; /* Adjust size as needed */
+  height: 140px; /* Adjust size as needed */
   top: 50%; /* Centra el logo verticalmente */
   left: 50%; /* Centra el logo horizontalmente */
   transform: translate(-50%, -50%); /* Asegura que el centro del logo esté en el centro de la pantalla */
@@ -81,23 +72,24 @@ body {
 .logo-image::before {
   content: "";
   position: absolute;
-  top: 10%; /* Adjust position as needed */
-  left: 10%; /* Adjust position as needed */
-  width: 80%; /* Adjust size as needed */
-  height: 80%; /* Adjust size as needed */
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-color: white;
   border-radius: 50%;
-  z-index: 0; /* Make sure the white circle is behind the logo */
+  z-index: -1; /* Make sure the white circle is behind the logo */
 }
 
 .logo-image .Logo {
-  position: relative;
+  position: absolute;
+  top: 50%; /* Centra el logo verticalmente */
+  left: 50%; /* Centra el logo horizontalmente */
+  transform: translate(-47%, -50%); /* Asegura que el centro del logo esté en el centro de su contenedor */
   z-index: 1; /* Make sure the logo is above the white circle */
-  width: 90%; /* Adjust size as needed */
+  width: 80%; /* Adjust size as needed */
   height: auto;
 }
-
-
 
 /* Text content Styling */
 .text-content p {
@@ -111,34 +103,35 @@ body {
 /* Rating stars Styling */
 .rating-icons {
   display: flex;
-  border: 0px;
   justify-content: space-around;
   /* margin-bottom:  5vh; /* Space between rating stars and submit button */
-
+  width: 70%;  /* reduce width */
+  padding: 10px 0; /* add vertical padding */
+  margin: auto; /* center this div */
 }
 
-.star {
-  width: 20vw;
-  height: 20vh;
-}
 
 /* Button Styling */
 /* Button Styling */
 .submit-button {
-  background-color: lightblue;
+  background: black;
   color: white;
-  border: none;
-  padding: 1em 2em;
-  border-radius: 20px; /* Hace el botón más redondeado */
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  border: 2px solid var(--neutral-06, #272B30);
+  padding: 1.2em 2.7em;
+  border-radius: 12px; /* Hace el botón más redondeado */
+  box-shadow: 2px 2px 5px rgba(255, 255, 255, 0.228);
   cursor: pointer;
   display: block; /* Hace que el botón sea un bloque para poder centrarlo */
   margin: auto; /* Centra el botón */
+  font-size: 17px; /* Cambia el tamaño de la letra */
+  font-weight: bold; /* Hace la letra negrita */
 }
 
 .submit-button:hover {
-  background-color: darkblue; /* Cambia el color del botón cuando se pasa el cursor sobre él */
+  background-color: white; /* Cambia el color del botón cuando se pasa el cursor sobre él */
+  color: black;
 }
+
 
 .rating-container {
   flex-grow: 1; /* grow to take up remaining space */
@@ -152,26 +145,20 @@ body {
 
 @media (max-width: 600px) {
   .rating-container {
-    /*
-      padding: 10px;
-      */
   }
 
   .text-content p {
       font-size: 1.5em;
   }
 
-  .logo-image{
-    padding: 10px;
-  }
   .star {
-      width: 15vw;
-      height: 15vh;
+    width: 10vw;
   }
 
   .logo-image {
-      width: 100px; /* Adjust size as needed */
-      height: 100px; /* Adjust size as needed */
+      width: 120px; /* Adjust size as needed */
+      height: 120px; /* Adjust size as needed */
+      padding: 1px;
   }
 }
 
