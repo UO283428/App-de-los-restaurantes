@@ -10,7 +10,7 @@ const Rating = () => {
   // State definition
   const [rating, setRating] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [mainText, setMainText] = useState("¿Cómo calificarías tu experiencia en Goiko?");
+  const [mainText, setMainText] = useState("¿Cómo calificarías tu experiencia?");
 
   // Handles form submit event
   const handleSubmit = (evt) => {

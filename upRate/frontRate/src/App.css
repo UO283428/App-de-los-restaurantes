@@ -137,11 +137,6 @@ html, body {
   font-weight: bold; /* Hace la letra negrita */
 }
 
-.submit-button:hover {
-  background-color: white; /* Cambia el color del botón cuando se pasa el cursor sobre él */
-  color: black;
-}
-
 .submit-button:focus {
   outline: none;
 }
