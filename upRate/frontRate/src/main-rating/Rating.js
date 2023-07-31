@@ -23,7 +23,7 @@ const Rating = () => {
               <Logo className="logo-image"
               src="http://boldflowco.com/wp-content/uploads/2023/07/logo-goiko.png" alt="Example Logo" />
               <div className="rating-container">
-                <Text className="text-content" content="¿Que te ha parecido el ser?" />
+                <Text className="text-content" content="¿Que te ha parecido el servicio?" />
                 <CustomStarIcon className="rating-icons" setRating={setRating}/>
                 <input type="submit" className="submit-button" value="Enviar reseña" />
               </div>
