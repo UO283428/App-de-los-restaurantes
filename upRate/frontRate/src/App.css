@@ -31,6 +31,7 @@ html, body {
   height: 49vh;
   width: 100%;
   object-fit: cover;
+  transition: height 0.5s ease-in-out;
 }
 
 
@@ -55,7 +56,7 @@ html, body {
   object-fit: cover; /* Cambiado de "fill" a "cover" para mantener las proporciones */
 }
 
-.front-page-image .reviewing{
+.front-page-image.reviewing{
   height: 15vh;
   transition: height 0.5s ease-in-out;
 }
@@ -68,6 +69,7 @@ html, body {
   top: 50%; /* Centra el logo verticalmente */
   left: 50%; /* Centra el logo horizontalmente */
   transform: translate(-50%, -50%); /* Asegura que el centro del logo esté en el centro de la pantalla */
+  transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .logo-image::before {
@@ -92,11 +94,12 @@ html, body {
   height: auto;
 }
 
+/*
 .logo-image.reviewing{
   transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
   transform: translate(-50%, -300%);
 }
-
+*/
 
 /* Text content Styling */
 .text-content p {
@@ -118,8 +121,6 @@ html, body {
 }
 
 .rating-icons.asking{
-  transition: opacity 0.5s ease-in-out;
-  opacity: 0;
 }
 
 /* Button Styling */
@@ -141,9 +142,6 @@ html, body {
   outline: none;
 }
 
-.submit-button.reviewing {
-}
-
 .rating-container {
   flex-grow: 1; /* grow to take up remaining space */
   width: 100%;
@@ -154,26 +152,12 @@ html, body {
   overflow: auto; /* Permite el desplazamiento si el contenido es demasiado grande */
 }
 
-.rating-container.asking .rating-icons {
-  transition: 0.5s;
-  display: none;
-}
-
-.front-page-image.reviewing {
-  transition: 0.5s;
-  height: 15vh;
-}
-
-.logo-image.reviewing {
-  transition: 0.5s;
-  transform: translate(-50%, -300%);
-}
-
 .text-input {
   width: 100%;
   height: 100%;
   opacity: 0;
   display: none;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .text-input.asking {
@@ -198,3 +182,22 @@ html, body {
   }
 }
 
+.IsReviewing-enter {
+  transform: scale(0.9);
+}
+
+.IsReviewing-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 500ms ease-in-out, transform 500ms ease-in-out;
+}
+
+.IsReviewing-exit {
+  opacity: 1;
+}
+
+.IsReviewing-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 500ms ease-in-out, transform 500ms ease-in-out;
+}

@@ -16,7 +16,7 @@ const CustomStarIcon = ( { setRating, className } ) => {
                     <label>
                         <input 
                         type="radio" 
-                        name="rating" 
+                        name="rating"
                         value={ratingValue} 
                         onClick={() => {setRatingStars(ratingValue); setRating(ratingValue); }}
                         />

@@ -1,9 +1,11 @@
 // Importing required modules and components
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from './components/Image';
 import Logo from './components/Logo';
 import Text from './components/Text';
 import CustomStarIcon from './components/CustomStarIcon';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+
 
 // Rating Component
 const Rating = () => {
@@ -27,12 +29,16 @@ const Rating = () => {
   const changeElements = () => {
     if (isReviewing === false && isAsking === false) {
       setIsReviewing(true);
+      setIsAsking(false);
       setMainText("¿Qué podemos mejorar?");
     }
-    else if (isReviewing === true && isAsking === false) {
+    else if (isReviewing && isAsking === false) {
       setIsReviewing(false);
       setIsAsking(true);
       setMainText("¿Qué podemos mejorar?");
+    } else {
+      setIsAsking(false);
+      setIsReviewing(false);
     }
   };
 
@@ -42,27 +48,27 @@ const Rating = () => {
       <div className="app">
         <form onSubmit={handleSubmit} className="review-form">
           <Image 
-            className= {'front-page-image' + (isReviewing ? ' reviewing' : '')} 
+            className= {'front-page-image'} 
             src="https://www.justretail.news/wp-content/uploads/2021/08/Goiko-H2O-noticias-retail-2-scaled.jpg" alt="Example Image" />
           
           <Logo 
-            className={"logo-image" + (isReviewing ? ' reviewing' : '')} 
+            className={"logo-image"} 
             src="https://boldflowco.com/wp-content/uploads/2023/07/logo-goiko.png" alt="Example Logo" />
           
           <div 
-            className={"rating-container" + (isReviewing ? ' reviewing' : '')}>
+            className={"rating-container"}>
             
             <Text 
-              className={"text-content" + (isReviewing ? ' reviewing' : '')}
+              className={"text-content"}
               content={mainText} />
             
             <CustomStarIcon 
-              className={"rating-icons" + (isReviewing ? ' reviewing' : '')}
+              className={"rating-icons"}
               setRating={setRating}/>
 
             <input 
               type="submit"
-              className={"submit-button" + (isReviewing ? ' reviewing' : '')}
+              className={"submit-button"}
               value="Enviar reseña" />
           </div>
         </form>
@@ -75,60 +81,60 @@ const Rating = () => {
     return (
       <div className="app">
         <form onSubmit={handleSubmit} className="review-form">
-          <Image 
-            className= {'front-page-image' + (isReviewing ? ' reviewing' : '')} 
-            src="https://www.justretail.news/wp-content/uploads/2021/08/Goiko-H2O-noticias-retail-2-scaled.jpg" alt="Example Image" />
-          
-          <Logo 
-            className={"logo-image" + (isReviewing ? ' reviewing' : '')} 
-            src="https://boldflowco.com/wp-content/uploads/2023/07/logo-goiko.png" alt="Example Logo" />
-          
+          <TransitionGroup>
+            <CSSTransition 
+            key="mainPage" 
+            timeout={500} 
+            classNames="IsReviewing">
+              <div>
+                <Image 
+                  className= {'front-page-image' + ' reviewing'} 
+                  src="https://www.justretail.news/wp-content/uploads/2021/08/Goiko-H2O-noticias-retail-2-scaled.jpg" alt="Example Image" />
+
+                <Logo 
+                  className={"logo-image" + ' reviewing'} 
+                  src="https://boldflowco.com/wp-content/uploads/2023/07/logo-goiko.png" alt="Example Logo" />
+              </div>
+            </CSSTransition>
+          </TransitionGroup>
           <div 
-            className={"rating-container" + (isReviewing ? ' reviewing' : '')}>
+            className={"rating-container" + ' reviewing'}>
             <div
-              className={"rating-question " + (isReviewing ? ' reviewing' : '')}>
+              className={"rating-question " + ' reviewing'}>
               <Text 
-                className={"text-content" + (isReviewing ? ' reviewing' : '')}
+                className={"text-content" + ' reviewing'}
                 content={mainText} />
               
               <CustomStarIcon 
-                className={"rating-icons" + (isReviewing ? ' reviewing' : '')}
+                className={"rating-icons" + ' reviewing'}
                 setRating={setRating}/>
             </div>
 
             <div
-              className={"rating-question " + (isReviewing ? ' reviewing' : '')}>
+              className={"rating-question " + ' reviewing'}>
               <Text 
-                className={"text-content" + (isReviewing ? ' reviewing' : '')}
+                className={"text-content" + ' reviewing'}
                 content={mainText} />
               
               <CustomStarIcon 
-                className={"rating-icons" + (isReviewing ? ' reviewing' : '')}
+                className={"rating-icons" + ' reviewing'}
                 setRating={setRating}/>
             </div>
 
             <div
-              className={"rating-question " + (isReviewing ? ' reviewing' : '')}>
+              className={"rating-question " + ' reviewing'}>
               <Text 
-                className={"text-content" + (isReviewing ? ' reviewing' : '')}
+                className={"text-content" + ' reviewing'}
                 content={mainText} />
               
               <CustomStarIcon 
-                className={"rating-icons" + (isReviewing ? ' reviewing' : '')}
+                className={"rating-icons" + ' reviewing'}
                 setRating={setRating}/>
             </div>
-
-
-            {/* If the rating is less than 3, show the input of text.*/}
-            <input
-              className={"text-input" + (isReviewing ? ' reviewing' : '')}
-              type="text"
-              placeholder="Escribe tu opinión aquí"
-            />
 
             <input 
               type="submit"
-              className={"submit-button" + (isReviewing ? ' reviewing' : '')}
+              className={"submit-button" + ' reviewing'}
               value="Enviar respuestas" />
           </div>
         </form>
@@ -137,54 +143,66 @@ const Rating = () => {
   };
 
     // function that returns all the elements form the second page
-    // TODO: Asking page not working
     const askingPage = () => {
       return (
         <div className="app">
           <form onSubmit={handleSubmit} className="review-form">
             <Image 
-              className= {'front-page-image' + (isReviewing ? ' reviewing' : '')} 
+              className= {'front-page-image' + ' asking'} 
               src="https://www.justretail.news/wp-content/uploads/2021/08/Goiko-H2O-noticias-retail-2-scaled.jpg" alt="Example Image" />
             
             <Logo 
-              className={"logo-image" + (isReviewing ? ' reviewing' : '')} 
+              className={"logo-image" + ' asking'} 
               src="https://boldflowco.com/wp-content/uploads/2023/07/logo-goiko.png" alt="Example Logo" />
             
             <div 
-              className={"rating-container" + (isReviewing ? ' reviewing' : '')}>
+              className={"rating-container" + ' asking'}>
                 <Text 
-                  className={"text-content" + (isReviewing ? ' reviewing' : '')}
-                  content={mainText} />
+                  className={"text-content" + ' asking'}
+                  content="¿Cuentanos un poco más de tu experiencia?" />
                 
-  
-              {/* If the rating is less than 3, show the input of text.*/}
-              <input
-                className={"text-input" + ""}
-                type="text"
-                placeholder="aaaaaaaaaaquí"
-              />
-  
+                <input
+              className={"text-input" + ' asking'}
+              type="text"
+              placeholder="Escribe tu opinión aquí"
+            />
+
               <input 
                 type="submit"
-                className={"submit-button" + (isReviewing ? ' reviewing' : '')}
+                className={"submit-button" + ' asking'}
                 value="Enviar respuestas" />
             </div>
           </form>
-          <input
-                className={"text-input" + ""}
-                type="text"
-                placeholder="aaaaaaaaaaquí"
-              />
         </div>
       );
     };
 
   return (
-    <div>
-      { !isReviewing && !isAsking ? mainPage() : '' }
-      { isReviewing && !isAsking ? reviewingPage() : '' }
-      { !isReviewing && isAsking ? askingPage() : ''}
-    </div>
+    <TransitionGroup>
+    {!isReviewing && !isAsking && 
+      <CSSTransition 
+        key="mainPage" 
+        timeout={500} 
+        classNames="fade">
+        <div>{mainPage()}</div>
+      </CSSTransition>}
+      
+    {isReviewing && !isAsking && 
+      <CSSTransition 
+        key="reviewingPage" 
+        timeout={500} 
+        classNames="fade">
+        <div>{reviewingPage()}</div>
+      </CSSTransition>}
+      
+    {!isReviewing && isAsking && 
+      <CSSTransition 
+        key="askingPage" 
+        timeout={500} 
+        classNames="fade">
+        <div>{askingPage()}</div>
+      </CSSTransition>}
+  </TransitionGroup>
   );
 };
 
