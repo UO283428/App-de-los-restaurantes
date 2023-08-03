@@ -5,6 +5,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Header from "../components/Header";
 import Text from "../components/Text";
 import CustomStarIcon from "../components/CustomStarIcon";
+import "./styles/RatingPage.css";
 
     // Rating Component
 const RatingPage = (props) => {
@@ -47,7 +48,7 @@ const RatingPage = (props) => {
   const mainPage = () => {
     return(
       <div className="app">
-        <Header />
+        <Header extended="true" />
         <form onSubmit={handleSubmit} className="review-form">          
           <div 
             className={"rating-container"}>

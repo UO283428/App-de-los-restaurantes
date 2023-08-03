@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
-import './CustomStarIcon.css';
+import './styles/CustomStarIcon.css';
 
 const CustomStarIcon = ( { setRating, className } ) => {
     const [rating, setRatingStars] = useState(null);

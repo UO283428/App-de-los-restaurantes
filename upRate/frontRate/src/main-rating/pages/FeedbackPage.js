@@ -1,5 +1,6 @@
 import Header from '../components/Header';
 import Text from '../components/Text';
+import './styles/FeedbackPage.css';
 
 const FeedbackPage = () => {
 

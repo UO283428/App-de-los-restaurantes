@@ -1,13 +1,14 @@
 import React from "react";
 import Image from "./Image";
 import Logo from "./Logo";
+import "./styles/Header.css";
 
-const Header = () => {
+const Header = ( extended ) => {
 
     return (
-        <div className="header-container">
+        <div className={"header-container" + (extended ? ' extended' : 'compact')}>
         <Image 
-          className= {'front-page-image'} 
+          className= {'front-page-image' } 
           src="https://www.justretail.news/wp-content/uploads/2021/08/Goiko-H2O-noticias-retail-2-scaled.jpg" alt="Example Image" />
         
         <Logo 

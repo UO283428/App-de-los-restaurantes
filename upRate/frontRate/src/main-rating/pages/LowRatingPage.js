@@ -9,6 +9,7 @@ import Text from "../components/Text";
 import Image from "../components/Image";
 import Logo from "../components/Logo";
 import CustomStarIcon from "../components/CustomStarIcon";
+import "./styles/LowRatingPage.css";
 
 // Rating Component
 const LowRatingPage = () => {
