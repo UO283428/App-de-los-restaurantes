@@ -1,18 +1,21 @@
-import React from "react";
-import Header from "../components/Header";
+import { useEffect } from "react";
 import "./styles/HighRatingPage.css";
 
-const HighRatingPage = () => {
+const HighRatingPage = ({ setHeaderExtended, setHeaderAnimated }) => {
+  useEffect(() => {
+    setHeaderExtended(false);
+  }, [setHeaderExtended]);
 
-    return (
-        <div className="app">
-            <Header />
-            <div className="feedback-container">
-                <h1>¡Gracias por tu feedback!</h1>
-                <p>¡Nos vemos pronto!</p>
-            </div>
-        </div>
-    );
+  useEffect(() => {
+    setHeaderAnimated(true);
+  }, [setHeaderAnimated]);
+
+  return (
+    <div className="feedback-container">
+        <h1>¡Gracias por tu feedback!</h1>
+        <p>¡Nos vemos pronto!</p>
+    </div>
+  );
 }
 
 export default HighRatingPage;

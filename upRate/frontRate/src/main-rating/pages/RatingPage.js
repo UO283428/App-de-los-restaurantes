@@ -1,89 +1,91 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserContext";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import Header from "../components/Header";
 import Text from "../components/Text";
 import CustomStarIcon from "../components/CustomStarIcon";
+import { URLS } from "../constants/urls";
 import "./styles/RatingPage.css";
 
-    // Rating Component
-const RatingPage = (props) => {
+// RatingPage component
+// The rating pages is inside a layout as the different pages in the webApp. This way 
+// we control the header actions and position with the setHeaderExtended and setHeaderAnimated
+// functions. They are set as extended and not animated in this page.
+const RatingPage = ({ setHeaderExtended, setHeaderAnimated }) => {
 
-  const contextValue = useContext(UserContext);
-  console.log(contextValue);
+  // This is to set the header as extended and not animated when the page is loaded.
+  // When it is left, it is set as extended and animated again.
+  useEffect(() => {
+    setHeaderExtended(true);
+    // You can also set it back to true or any other value on component unmount
+    return () => {
+      setHeaderExtended(true);
+    }
+  }, [setHeaderExtended]);
 
-    const navigate = useNavigate();
-    const {user, setUser} = useContext(UserContext);
-    // State definition
-    const [rating, setRating] = useState(0);
-    const [isReviewing, setIsReviewing] = useState(false);
-    const [isAsking, setIsAsking] = useState(false);
-    const [mainText, setMainText] = useState("¿Cómo calificarías tu experiencia?");
+  useEffect(() => {
+    setHeaderAnimated(false);
+    // You can also set it back to false or any other value on component unmount
+    return () => {
+      setHeaderAnimated(true);
+    }
+  }, [setHeaderAnimated]);
 
-    // Handles form submit event
-    const handleSubmit = (evt) => {
-      evt.preventDefault();
-      if (rating > 3) {
-        alert(`Thank you for your review!`);
-      } else {
-        goToNextPage();
-      }
-    };
+  // Context definition and navigation
+  const navigate = useNavigate();
+  const {user, setUser} = useContext(UserContext);
   
-    // Changes UI elements based on the rating value
-    const goToNextPage = () => {
-      setUser({
-        ...user,
-        rating: rating
-      });
-      if (rating > 3) {
-        navigate("/high-rating");
-      } else {
-        navigate("/low-rating");
-      }
-    };
+  // State definition
+  const [rating, setRating] = useState(0);
 
-    // function that returns all the elements form the first page
-  const mainPage = () => {
-    return(
-      <div className="app">
-        <Header extended="true" />
-        <form onSubmit={handleSubmit} className="review-form">          
-          <div 
-            className={"rating-container"}>
-            
-            <Text 
-              className={"text-content"}
-              content={mainText} />
-            
-            <CustomStarIcon 
-              className={"rating-icons"}
-              setRating={setRating}/>
+  // Content definition
+  const [mainText] = useState("¿Cómo calificarías tu experiencia?");
 
-            <input 
-              type="submit"
-              className={"submit-button"}
-              value="Enviar reseña" />
-          </div>
-        </form>
+  // Handles form submit event
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    if (rating > 3) {
+      navigate(URLS.HIGH_RATING);
+    } else {
+      goToNextPage();
+    }
+  };
+
+  // Changes UI elements based on the rating value
+  const goToNextPage = () => {
+    setUser({
+      ...user,
+      rating: rating,
+      lastPage: URLS.RATING
+    });
+    if (rating > 3) {
+      navigate(URLS.HIGH_RATING);
+    } else {
+      navigate(URLS.LOW_RATING);
+    }
+  };
+
+  // function that returns all the elements form the first page
+  return(
+    <form onSubmit={handleSubmit} className="review-form">          
+      <div 
+        className={"rating-container"}>
+        
+        <Text 
+          className={"text-content"}
+          content={mainText} />
+        
+        <CustomStarIcon 
+          className={"rating-icons"}
+          setRating={setRating}/>
+
+        <input 
+          type="submit"
+          className={"submit-button"}
+          value="Enviar reseña" />
       </div>
-    ); 
- };
+    </form>
+  ); 
 
-
- return (
-    <TransitionGroup>
-    {!isReviewing && !isAsking && 
-      <CSSTransition 
-        key="mainPage" 
-        timeout={500} 
-        classNames="fade">
-        <div>{mainPage()}</div>
-      </CSSTransition>}
-    </TransitionGroup>
-  );
 };
 
-// Exporting Rating component as default
 export default RatingPage;

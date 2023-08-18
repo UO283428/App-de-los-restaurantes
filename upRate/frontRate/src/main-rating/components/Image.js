@@ -20,7 +20,7 @@ Image.propTypes = {
 };
 
 Image.defaultProps = {
-    alt: '', // default value if alt prop isn't provided
+    alt: 'Image', // default value if alt prop isn't provided
 };
 
 export default Image;

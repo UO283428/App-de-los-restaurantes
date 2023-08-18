@@ -19,7 +19,7 @@ Logo.propTypes = {
 };
 
 Logo.defaultProps = {
-    alt: '',
+    alt: 'Logo Image',
 };
 
 export default Logo;

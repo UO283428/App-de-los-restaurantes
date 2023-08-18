@@ -1,12 +1,11 @@
 .front-page-image {
     position: relative; 
-    height: 49vh;
     width: 100%;
-    object-fit: cover;
     transition: height 0.5s ease-in-out;
+    box-sizing: border-box;
 }
 
-/* Image Styling */
+/* Image Styling - grading */
 .front-page-image::after {
     content: "";
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, black 100%);
@@ -23,12 +22,7 @@
     object-fit: cover; /* Cambiado de "fill" a "cover" para mantener las proporciones */
 }
   
-.front-page-image.reviewing{
-    height: 15vh;
-    transition: height 0.5s ease-in-out;
-}
-  
-  /* Logo Styling */
+/* Logo Styling - position */
 .logo-image {
     position: absolute;
     width: 140px; /* Adjust size as needed */
@@ -38,7 +32,8 @@
     transform: translate(-50%, -50%); /* Asegura que el centro del logo esté en el centro de la pantalla */
     transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
-  
+
+/* Logo Styling - white circle background */
 .logo-image::before {
     content: "";
     position: absolute;
@@ -50,7 +45,8 @@
     border-radius: 50%;
     z-index: -1; /* Make sure the white circle is behind the logo */
 }
-  
+
+/* Logo Styling - position */
 .logo-image .Logo {
     position: absolute;
     top: 50%; /* Centra el logo verticalmente */
@@ -60,3 +56,38 @@
     width: 80%; /* Adjust size as needed */
     height: auto;
 }
+
+/* Transitions - front page image */
+.front-page-image.extended {
+    /* Styles for the extended header state */
+    height: 49vh; /* example value */
+  }
+  
+.front-page-image.compact {
+    /* Styles for the compact header state */
+    height: 15vh; /* example value */
+  }
+  
+.front-page-image.animated {
+    /* Adding a transition */
+    transition: height 0.5s ease-in-out;
+  }
+
+
+/* Transitions - logo image */
+  .logo-image.extended {
+    /* Styles for the extended header state */
+    transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
+    transform: translate(-50%, -50%);
+  }
+  .logo-image.compact {
+    /* Styles for the extended header state */
+    transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
+    transform: translate(-50%, -300%);
+  }
+  
+  .logo-image.animated {
+    /* Styles for the extended header state */
+    transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
+    transform: translate(-50%, -300%);
+  }
