@@ -8,16 +8,13 @@ import CustomStarIcon from "../components/CustomStarIcon";
 import "./styles/LowRatingPage.css";
 
 // Rating Component
-const LowRatingPage = ({ setHeaderExtended }) => {
+const LowRatingPage = ({ setHeaderExtended, setHeaderAnimated }) => {
   useEffect(() => {
-    // For demonstration, we are setting header to not extended on component mount
     setHeaderExtended(false);
-    
-    // You can also set it back to true or any other value on component unmount
-    return () => {
-      setHeaderExtended(true);
-    }
+  
   }, [setHeaderExtended]);
+  
+
   const navigate = useNavigate();
 
   const {user, setUser} = useContext(UserContext);

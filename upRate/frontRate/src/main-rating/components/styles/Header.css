@@ -1,7 +1,6 @@
 .front-page-image {
     position: relative; 
     width: 100%;
-    transition: height 0.5s ease-in-out;
     box-sizing: border-box;
 }
 
@@ -30,7 +29,6 @@
     top: 50%; /* Centra el logo verticalmente */
     left: 50%; /* Centra el logo horizontalmente */
     transform: translate(-50%, -50%); /* Asegura que el centro del logo esté en el centro de la pantalla */
-    transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 /* Logo Styling - white circle background */
@@ -77,17 +75,15 @@
 /* Transitions - logo image */
   .logo-image.extended {
     /* Styles for the extended header state */
-    transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
     transform: translate(-50%, -50%);
   }
+
   .logo-image.compact {
     /* Styles for the extended header state */
-    transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
     transform: translate(-50%, -300%);
   }
-  
+
   .logo-image.animated {
     /* Styles for the extended header state */
     transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
-    transform: translate(-50%, -300%);
   }

@@ -18,7 +18,7 @@ const RatingPage = ({ setHeaderExtended, setHeaderAnimated }) => {
     setHeaderExtended(true);
     // You can also set it back to true or any other value on component unmount
     return () => {
-      setHeaderExtended(true);
+      setHeaderExtended(false);
     }
   }, [setHeaderExtended]);
 
@@ -60,6 +60,9 @@ const RatingPage = ({ setHeaderExtended, setHeaderAnimated }) => {
     if (rating > 3) {
       navigate(URLS.HIGH_RATING);
     } else {
+      setHeaderExtended(false);
+      setHeaderAnimated(true);
+
       navigate(URLS.LOW_RATING);
     }
   };

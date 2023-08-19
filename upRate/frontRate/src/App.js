@@ -10,7 +10,9 @@ import LowRatingPage from './main-rating/pages/LowRatingPage.js';
 import HighRatingPage from './main-rating/pages/HighRatingPage.js';
 import FeedbackPage from './main-rating/pages/FeedbackPage.js';
 
-/*const RatingPage = lazy(() => import('./main-rating/pages/RatingPage'));
+/* Not loading the whole application at once could be done with lazy loading
+    but it is not working with the transitions
+const RatingPage = lazy(() => import('./main-rating/pages/RatingPage'));
 const LowRatingPage = lazy(() => import('./main-rating/pages/LowRatingPage'));
 const HighRatingPage = lazy(() => import('./main-rating/pages/HighRatingPage'));
 const FeedbackPage = lazy(() => import('./main-rating/pages/FeedbackPage'));*/
