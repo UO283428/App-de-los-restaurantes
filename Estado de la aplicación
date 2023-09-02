@@ -9,13 +9,15 @@ Estoy trabajando en:
 
 
     Frontend:
-        Routers work with the URLS
-        Router corrctly configured to work as a single page application
-        Petitions to the API have been stablished
-        Animations work smoothly. 
+        Routers work with the URLS y LazyLoading.
+        Router corrctly configured to work as a single page application.
+        Petitions to the API have been stablished.
+        Animations work smoothly.
         
         Rating, LowRating and Header work fine.
         
         TODO: Validación de campos. Mínimo de una estrella
         TODO: Añadir feedback aptico.
-        TODO: Integrate the feedback page from the git
+        TODO: El feedback debe de ser un cuadro de texto.
+        TODO: Página final en la que se de las gracias por el feedback.
+        TODO: Página con los links para Google Maps, TripAdvisor...
