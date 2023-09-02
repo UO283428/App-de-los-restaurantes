@@ -1,0 +1,21 @@
+Estoy trabajando en:
+    Backend:
+        Routers answer correctly to petitions for
+            Images
+            Questions
+        Repositories needed.
+        
+        TODO: Conexion with the database have not been stablished.
+
+
+    Frontend:
+        Routers work with the URLS
+        Router corrctly configured to work as a single page application
+        Petitions to the API have been stablished
+        Animations work smoothly. 
+        
+        Rating, LowRating and Header work fine.
+        
+        TODO: Validación de campos. Mínimo de una estrella
+        TODO: Añadir feedback aptico.
+        TODO: Integrate the feedback page from the git

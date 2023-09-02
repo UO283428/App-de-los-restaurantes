@@ -1,50 +1,56 @@
-import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useContext, useEffect, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
 import { UserContext } from "../../UserContext";
 import Text from "../components/Text";
 import CustomStarIcon from "../components/CustomStarIcon";
-import { URLS } from "../constants/urls";
+import { URLSNAV } from "../constants/urls";
+import { HeaderContext } from "../../HeaderContext";
 import "./styles/RatingPage.css";
 
 // RatingPage component
 // The rating pages is inside a layout as the different pages in the webApp. This way 
 // we control the header actions and position with the setHeaderExtended and setHeaderAnimated
 // functions. They are set as extended and not animated in this page.
-const RatingPage = ({ setHeaderExtended, setHeaderAnimated }) => {
+const RatingPage = () => {
+
+  const { id } = useParams();
+
+  const {setHeaderAnimated, setHeaderExtended} = useContext(HeaderContext);
 
   // This is to set the header as extended and not animated when the page is loaded.
-  // When it is left, it is set as extended and animated again.
   useEffect(() => {
     setHeaderExtended(true);
-    // You can also set it back to true or any other value on component unmount
-    return () => {
-      setHeaderExtended(false);
-    }
-  }, [setHeaderExtended]);
-
-  useEffect(() => {
     setHeaderAnimated(false);
-    // You can also set it back to false or any other value on component unmount
-    return () => {
-      setHeaderAnimated(true);
-    }
-  }, [setHeaderAnimated]);
+  }, []);
 
   // Context definition and navigation
   const navigate = useNavigate();
   const {user, setUser} = useContext(UserContext);
-  
   // State definition
   const [rating, setRating] = useState(0);
+  // Animation fade-in fade-out
+  const [show, setShow] = useState(false);
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShow(true);
+    }, 50);
+  
+    // Clear the timeout if the component is unmounted before the timeout fires
+    return () => clearTimeout(timer);
+  }, []);
+  const ratingContainerRef = useRef(null);
 
   // Content definition
-  const [mainText] = useState("¿Cómo calificarías tu experiencia?");
+  const [mainText] = useState("¿Cómo calificarías tu experiencia1?");
 
   // Handles form submit event
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (rating > 3) {
-      navigate(URLS.HIGH_RATING);
+      navigate(URLSNAV.HIGH_RATING(id));
     } else {
       goToNextPage();
     }
@@ -55,40 +61,50 @@ const RatingPage = ({ setHeaderExtended, setHeaderAnimated }) => {
     setUser({
       ...user,
       rating: rating,
-      lastPage: URLS.RATING
+      lastPage: URLSNAV.RATING(id),
     });
-    if (rating > 3) {
-      navigate(URLS.HIGH_RATING);
-    } else {
-      setHeaderExtended(false);
-      setHeaderAnimated(true);
 
-      navigate(URLS.LOW_RATING);
+    setShow(false);
+    setHeaderExtended(false);
+    setHeaderAnimated(true);
+
+    if (rating > 3) {
+      navigate(URLSNAV.HIGH_RATING(id));
+    } else {
+      navigate(URLSNAV.LOW_RATING(id));
     }
   };
 
   // function that returns all the elements form the first page
   return(
     <form onSubmit={handleSubmit} className="review-form">          
-      <div 
-        className={"rating-container"}>
-        
-        <Text 
-          className={"text-content"}
-          content={mainText} />
-        
-        <CustomStarIcon 
-          className={"rating-icons"}
-          setRating={setRating}/>
+    <CSSTransition
+      in={show}  
+      nodeRef={ratingContainerRef}
+      timeout={300}
+      classNames="rating-container-animation"
+      unmountOnExit
+      >
+        <div 
+          ref={ratingContainerRef}
+          className={"rating-container"}>
+          
+          <Text 
+            className={"text-content"}
+            content={mainText} />
+          
+          <CustomStarIcon 
+            className={"rating-icons"}
+            setRating={setRating}/>
 
-        <input 
-          type="submit"
-          className={"submit-button"}
-          value="Enviar reseña" />
-      </div>
+          <input 
+            type="submit"
+            className={"submit-button"}
+            value="Enviar reseña" />
+        </div>
+      </CSSTransition>
     </form>
-  ); 
-
+  );
 };
 
 export default RatingPage;

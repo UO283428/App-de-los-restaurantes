@@ -1,11 +1,14 @@
 var createError = require('http-errors');
 var express = require('express');
+var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes/indexRouter');
 var usersRouter = require('./routes/users');
+var imageRouter = require('./routes/api-webapp/imageRoutes'); // added by me
+var questionsRouter = require('./routes/api-webapp/questionsRoutes'); // added by me
 
 var app = express();
 
@@ -19,12 +22,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(cors()); // Use this after the variable declaration
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-});
+// define routes for delivering images
+app.use('/', imageRouter);
+app.use('/', questionsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

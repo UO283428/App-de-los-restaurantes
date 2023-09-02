@@ -1,14 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { HeaderContext } from "../../HeaderContext";
 import "./styles/HighRatingPage.css";
 
-const HighRatingPage = ({ setHeaderExtended, setHeaderAnimated }) => {
-  useEffect(() => {
-    setHeaderExtended(false);
-  }, [setHeaderExtended]);
+const HighRatingPage = () => {
+  
+  const {setHeaderAnimated, setHeaderExtended} = useContext(HeaderContext);
 
   useEffect(() => {
+    setHeaderExtended(false);
     setHeaderAnimated(true);
-  }, [setHeaderAnimated]);
+  }, []);
 
   return (
     <div className="feedback-container">

@@ -1,27 +1,85 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
 import { UserContext } from "../../UserContext";
 import Text from "../components/Text";
-import CustomStarIcon from "../components/CustomStarIcon";
+import { URLSNAV } from "../constants/urls";
+import { API_URLS } from "../../config";
 import "./styles/LowRatingPage.css";
+import RatingQuestion from "../components/RatingQuestion";
+import { HeaderContext } from "../../HeaderContext";
 
 // Rating Component
-const LowRatingPage = ({ setHeaderExtended, setHeaderAnimated }) => {
+const LowRatingPage = () => {
+
+  const {setHeaderAnimated, setHeaderExtended} = useContext(HeaderContext);
+  
+  /*
   useEffect(() => {
-    setHeaderExtended(false);
-  
-  }, [setHeaderExtended]);
-  
+    // setTimeout of 350 ms
+    setTimeout(() => {
+      setHeaderExtended(false);
+      setHeaderAnimated(false);
+    }, 350);
+  }, []);
+  */
 
   const navigate = useNavigate();
-
   const {user, setUser} = useContext(UserContext);
+  // Get the id from the url subdomain.basedomain.es/id/...
+  const { id } = useParams();
+
   // State definition
-  const [rate, setRate] = useState(0);
-  const [rating, setRating] = useState(0);
-  const [mainText, setMainText] = useState("¿Cómo calificarías tu experiencia?");
+  const [questions, setQuestions] = useState([{
+        id: "none",
+        content: "none",
+        rating: 0,
+        show: false,
+    }]);
+  const [isLoading, setIsLoading] = useState(true);
+  const questionReferences = React.useRef([]);
+
+  // Animation fade-in fade-out
+  useEffect(() => {
+    setQuestions(prevQuestions => {
+      return prevQuestions.map(question => ({
+        ...question,
+        show: false,
+      }));
+    });
+
+    const timer = setTimeout(() => {
+      setQuestions(prevQuestions => {
+        return prevQuestions.map(question => ({
+          ...question,
+          show: true,
+        }));
+      });
+    }, 250);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // fetching the questions from the API
+  useEffect(() => {
+    fetch(API_URLS.questions(id))
+    .then(response => response.json())
+    .then(data => {
+        const fetchedQuestions = data.questions.map(question => ({
+            id: question.id,
+            content: question.content,
+            rating: 0,
+            show: false,
+        }));
+        setQuestions(fetchedQuestions);
+        setIsLoading(false);
+        console.log("fetched questions: ", fetchedQuestions);
+    })
+    .catch(error => {
+        console.error("Error fetching questions:", error);
+        setIsLoading(false);
+    });
+  }, []);
 
   // Handles form submit event
   const handleSubmit = (evt) => {
@@ -29,60 +87,85 @@ const LowRatingPage = ({ setHeaderExtended, setHeaderAnimated }) => {
     goToNextPage();
   };
 
+  // Sets the rating value
+  const setRatingQ = (question) => (rating) => {
+    question.rating = rating;
+  }
+
   // Changes UI elements based on the rating value
   const goToNextPage = () => {
     setUser({
       ...user,
-      rate: rate
+      lastPage: URLSNAV.LOW_RATING(id),
     });
-    navigate('/feedback');
+
+    setQuestions(prevQuestions => {
+      return prevQuestions.map(question => ({
+        ...question,
+        show: false,
+      }));
+    });
+
+    // wait for animation to finish and then navigate
+    setTimeout(() => {
+      navigate(URLSNAV.FEEDBACK(id));
+    }, 250);
   };
 
+  const btnReference = React.createRef();
+
  return (
-    <form onSubmit={handleSubmit} className="review-form">
-      <div 
-        className={"rating-container"}>
-        <div
-          className={"rating-question "}>
-          <Text 
-            className={"text-content"}
-            content={mainText} />
-          
-          <CustomStarIcon 
-            className={"rating-icons"}
-            setRating={setRating}/>
-        </div>
+<form onSubmit={handleSubmit} className="review-form">
+  {isLoading ? (
+    <div className="loading">
+      <Text className="loading-text" text="Cargando..." />
+    </div>
+  ) : (
+    <>
+      {questions.map((question, index) => {
+        const questionReference = React.createRef(); // Create a ref
 
-        <div
-          className={"rating-question "}>
-          <Text 
-            className={"text-content"}
-            content={mainText} />
-          
-          <CustomStarIcon 
-            className={"rating-icons"}
-            setRating={setRating}/>
-        </div>
+        // Store the ref in the array for each question
+        questionReferences.current[index] = questionReference;
 
-        <div
-          className={"rating-question "}>
-          <Text 
-            className={"text-content"}
-            content={mainText} />
-          
-          <CustomStarIcon 
-            className={"rating-icons"}
-            setRating={setRating}/>
+        return (
+          <CSSTransition
+            key={question.id}
+            in={question.show}
+            timeout={300}
+            classNames="rating-container-animation"
+            nodeRef={questionReference}
+            unmountOnExit
+          >
+            <div ref={questionReference} className={"rating-container"}>
+              <RatingQuestion
+                mainText={question.content}
+                setRating={setRatingQ(question)}
+              />
+            </div>
+          </CSSTransition>
+        );
+      })}
+      <CSSTransition
+        key={"submit"}
+        in={questions[0].show}
+        timeout={300}
+        classNames="rating-container-animation"
+        nodeRef={btnReference}
+        unmountOnExit
+      >
+        <div ref={btnReference} className={"rating-container"}>
+          <input
+            type="submit"
+            className={"submit-button"}
+            value="Enviar reseña"
+          />
         </div>
-
-        <input
-          type="submit"
-          className={"submit-button"}
-          value="Enviar respuestas" />
-      </div>
-    </form>
+      </CSSTransition>
+    </>
+  )}
+</form>
   );
 };
 
-// Exporting Rating component as default
 export default LowRatingPage;

@@ -1,0 +1,38 @@
+/*.fade-enter {
+    opacity: 0;
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in-out;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity 500ms ease-in-out;
+}
+
+.rating-question {
+    opacity: 1; 
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    transform: translateY(0);
+}
+
+.rating-question.collapsed {
+    opacity: 0;
+    transform: translateY(-100%); //Move it upwards by its own height
+    pointer-events: none; //Ensure it doesn't interfere with user interactions
+}
+
+.submit-button {
+    transition: transform 0.5s ease-in-out;
+}
+
+.submit-button.visible {
+    transform: translateY(0);
+}
+*/
