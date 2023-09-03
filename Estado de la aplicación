@@ -17,6 +17,7 @@ Estoy trabajando en:
         Rating, LowRating and Header work fine.
         
         TODO: Validación de campos. Mínimo de una estrella
+        TOOD: Márgenes en los laterales para las preguntas.
         TODO: Añadir feedback aptico.
         TODO: El feedback debe de ser un cuadro de texto.
         TODO: Página final en la que se de las gracias por el feedback.

@@ -61,10 +61,18 @@
     font-weight: bold; /* Hace la letra negrita */
     margin-bottom: 3vh;
     margin-top: 3vh;
+
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
 .submit-button:focus {
     outline: none;
+}
+
+/* submit button when disabled */
+.submit-button.disabled {
+    background: #393e45;
+    color: #a1a1a1;
 }
 
 @media (max-width: 600px) {
@@ -82,3 +90,9 @@
         padding: 1px;
     }
 }
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }

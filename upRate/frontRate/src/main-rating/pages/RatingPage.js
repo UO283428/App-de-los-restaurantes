@@ -18,6 +18,9 @@ const RatingPage = () => {
 
   const {setHeaderAnimated, setHeaderExtended} = useContext(HeaderContext);
 
+  const [errorMessage, setErrorMessage] = useState("");
+
+
   // This is to set the header as extended and not animated when the page is loaded.
   useEffect(() => {
     setHeaderExtended(true);
@@ -49,6 +52,11 @@ const RatingPage = () => {
   // Handles form submit event
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    if (rating === 0) {
+      setErrorMessage("Please select at least one star.");
+      return;
+    }
+
     if (rating > 3) {
       navigate(URLSNAV.HIGH_RATING(id));
     } else {
@@ -97,10 +105,12 @@ const RatingPage = () => {
             className={"rating-icons"}
             setRating={setRating}/>
 
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+
           <input 
             type="submit"
-            className={"submit-button"}
-            value="Enviar reseña" />
+            className={"submit-button" + (rating === 0 ? " disabled" : "")}
+            value="Enviar reseña"/>
         </div>
       </CSSTransition>
     </form>

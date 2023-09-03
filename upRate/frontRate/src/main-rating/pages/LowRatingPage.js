@@ -13,19 +13,10 @@ import { HeaderContext } from "../../HeaderContext";
 const LowRatingPage = () => {
 
   const {setHeaderAnimated, setHeaderExtended} = useContext(HeaderContext);
-  
-  /*
-  useEffect(() => {
-    // setTimeout of 350 ms
-    setTimeout(() => {
-      setHeaderExtended(false);
-      setHeaderAnimated(false);
-    }, 350);
-  }, []);
-  */
 
   const navigate = useNavigate();
   const {user, setUser} = useContext(UserContext);
+
   // Get the id from the url subdomain.basedomain.es/id/...
   const { id } = useParams();
 
@@ -83,7 +74,25 @@ const LowRatingPage = () => {
 
   // Handles form submit event
   const handleSubmit = (evt) => {
+    let ret = false;
     evt.preventDefault();
+    // Iterate over the questions and check if any of them has a rating of 0
+    setQuestions(prevQuestions => {
+      return prevQuestions.map(question => {
+        if (question.rating === 0) {
+          question.errorMessage = "Por favor, selecciona al menos una estrella.";
+          ret = true;
+        } else {
+          question.errorMessage = "";
+        }
+        return question;
+      });
+    });
+
+
+    if (ret) {
+      return;
+    }
     goToNextPage();
   };
 
@@ -142,6 +151,10 @@ const LowRatingPage = () => {
                 mainText={question.content}
                 setRating={setRatingQ(question)}
               />
+              
+              {(question.errorMessage != "") && (
+                <div className="error-message">{question.errorMessage}</div>
+              )}
             </div>
           </CSSTransition>
         );
@@ -157,7 +170,10 @@ const LowRatingPage = () => {
         <div ref={btnReference} className={"rating-container"}>
           <input
             type="submit"
-            className={"submit-button"}
+            className={"submit-button"
+          /* if any question has a rating of zero, the button must have added 'disabled' to the 
+            className */
+          + (questions.some(question => question.rating === 0) ? " disabled" : "")}
             value="Enviar reseña"
           />
         </div>
