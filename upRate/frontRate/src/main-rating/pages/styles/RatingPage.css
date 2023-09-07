@@ -1,21 +1,3 @@
-.rating-container-animation-enter {
-  opacity: 0;
-  transform: translateY(30%);
-}
-
-.rating-container-animation-enter-active {
-  opacity: 1;
-  transform: translateY(0%);
-  transition: opacity 300ms ease-in, transform 200ms ease-in;
-}
-
-.rating-container-animation-exit {
-  opacity: 1;
-  transform: translateY(0%);
-}
-
-.rating-container-animation-exit-active {
-  opacity: 0;
-  transform: translateY(-30%);
-  transition: opacity 300ms ease-in, transform 200ms ease-in;
+.text-content{
+    margin: 1em 1em 0;
 }

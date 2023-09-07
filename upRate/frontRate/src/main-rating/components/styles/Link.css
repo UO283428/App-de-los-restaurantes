@@ -1,0 +1,39 @@
+/* CSS for the link container */
+:root {
+    --link-container-width: 9vh;
+    --link-container-height: 9vw;
+  }
+  
+  .link-container {
+    width: var(--link-container-width);
+    height: var(--link-container-height);
+    display: inline-block; /* Display as inline-block to make it horizontal */
+    border-radius: 25px; /* Add rounded corners */
+    background-color: white; /* Set the background color to white */
+    padding: 0.5em 8em; /* Add padding to the container */
+    text-align: center; /* Center text horizontally */
+    text-decoration: none; /* Remove default underline on anchor tag */
+    margin: 0.5em 2em 1em 2em; /* Add margin for spacing */
+    border: 2px solid #007BFF; /* Add a border and set its color */
+    transition: background-color 0.3s, color 0.3s; /* Add a smooth transition effect */
+  }
+  
+  /* CSS for the link text */
+  .link-container a {
+    text-decoration: none; /* Remove default underline on anchor tag */
+    color: #383838; /* Set the text color */
+  }
+  
+  /* CSS for the link image */
+  .link-container img {
+    object-fit: contain; /* Cover the whole area without distortion */
+    height: 100%;
+    width: 100%;
+  }
+  
+  /* CSS for hover effect (optional) */
+  .link-container:hover {
+    background-color: #c5c5c5; /* Change background color on hover */
+    color: white; /* Change text color on hover */
+  }
+  

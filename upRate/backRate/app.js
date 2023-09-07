@@ -1,16 +1,18 @@
-var createError = require('http-errors');
-var express = require('express');
-var cors = require('cors');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/indexRouter');
-var usersRouter = require('./routes/users');
-var imageRouter = require('./routes/api-webapp/imageRoutes'); // added by me
-var questionsRouter = require('./routes/api-webapp/questionsRoutes'); // added by me
+const indexRouter = require('./routes/indexRouter');
+const usersRouter = require('./routes/users');
+const imageRouter = require('./routes/api-webapp/imageRoutes'); // added by me
+const questionsRouter = require('./routes/api-webapp/questionsRoutes'); // added by me
+const JWTRouter = require('./routes/JWTRouter'); // added by me
+const jwtAuth = require('./middlewear/jwtAuth'); // added by me
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,7 +24,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cors()); // Use this after the variable declaration
+app.use(cors()); // Use this after the constiable declaration
+app.use(jwtAuth); // JWT Authentication middleware
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -30,6 +33,7 @@ app.use('/users', usersRouter);
 // define routes for delivering images
 app.use('/', imageRouter);
 app.use('/', questionsRouter);
+app.use('/', JWTRouter); // added by me
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -38,6 +42,10 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    return res.status(401).send('Invalid token or no token provided.');
+  }
+
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

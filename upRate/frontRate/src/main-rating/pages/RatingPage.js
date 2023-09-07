@@ -29,7 +29,9 @@ const RatingPage = () => {
 
   // Context definition and navigation
   const navigate = useNavigate();
-  const {user, setUser} = useContext(UserContext);
+
+  const {jwtToken, setJwtToken, bulkData, setBulkData} = useContext(UserContext);
+
   // State definition
   const [rating, setRating] = useState(0);
   // Animation fade-in fade-out
@@ -44,10 +46,17 @@ const RatingPage = () => {
     // Clear the timeout if the component is unmounted before the timeout fires
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    console.log("bulkData: ", bulkData);
+  }, []);
+
   const ratingContainerRef = useRef(null);
+  const buttonContainerRef = useRef(null);
+
 
   // Content definition
-  const [mainText] = useState("¿Cómo calificarías tu experiencia1?");
+  const [mainText] = useState("How do you rate your experience?");
 
   // Handles form submit event
   const handleSubmit = (evt) => {
@@ -57,8 +66,17 @@ const RatingPage = () => {
       return;
     }
 
+    //Setting context to new values
+    setBulkData(prevData => ({
+      ...prevData,
+      generalRating: rating,
+      lastPage: URLSNAV.RATING(id),
+    }));
+
+    console.log("bulkData: ", bulkData);
+
     if (rating > 3) {
-      navigate(URLSNAV.HIGH_RATING(id));
+      navigate(URLSNAV.HIGH_FEEDBACK(id));
     } else {
       goToNextPage();
     }
@@ -66,52 +84,64 @@ const RatingPage = () => {
 
   // Changes UI elements based on the rating value
   const goToNextPage = () => {
-    setUser({
-      ...user,
-      rating: rating,
-      lastPage: URLSNAV.RATING(id),
-    });
+    //Setting context to new values 
+    //  rating: rating,
+    //  lastPage: URLSNAV.RATING(id),
+    
 
     setShow(false);
     setHeaderExtended(false);
     setHeaderAnimated(true);
 
-    if (rating > 3) {
-      navigate(URLSNAV.HIGH_RATING(id));
-    } else {
-      navigate(URLSNAV.LOW_RATING(id));
-    }
+    setTimeout(() => {
+      if (rating > 3) {
+        navigate(URLSNAV.HIGH_FEEDBACK(id));
+      } else {
+        navigate(URLSNAV.LOW_RATING(id));
+      }
+    }, 250);
   };
 
   // function that returns all the elements form the first page
   return(
     <form onSubmit={handleSubmit} className="review-form">          
-    <CSSTransition
-      in={show}  
-      nodeRef={ratingContainerRef}
-      timeout={300}
-      classNames="rating-container-animation"
-      unmountOnExit
-      >
+      <CSSTransition
+        in={show}  
+        nodeRef={ratingContainerRef}
+        timeout={300}
+        classNames="fade-in-up"
+        unmountOnExit
+        >
         <div 
           ref={ratingContainerRef}
           className={"rating-container"}>
-          
+            
           <Text 
             className={"text-content"}
             content={mainText} />
-          
+
           <CustomStarIcon 
             className={"rating-icons"}
             setRating={setRating}/>
 
           {errorMessage && <div className="error-message">{errorMessage}</div>}
-
+        </div>
+      </CSSTransition>
+      <CSSTransition
+        in={show}
+        nodeRef={buttonContainerRef}
+        timeout={300}
+        classNames="fade-in-up"
+        unmountOnExit
+        >
+          <div 
+            className={"button-container"}
+            ref={buttonContainerRef}>
           <input 
             type="submit"
             className={"submit-button" + (rating === 0 ? " disabled" : "")}
             value="Enviar reseña"/>
-        </div>
+          </div>
       </CSSTransition>
     </form>
   );

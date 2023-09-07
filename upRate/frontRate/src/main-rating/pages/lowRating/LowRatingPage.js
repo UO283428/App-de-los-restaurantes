@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-import { UserContext } from "../../UserContext";
-import Text from "../components/Text";
-import { URLSNAV } from "../constants/urls";
-import { API_URLS } from "../../config";
+import { UserContext } from "../../../UserContext";
+import Text from "../../components/Text";
+import { URLSNAV } from "../../constants/urls";
+import { API_URLS } from "../../../config";
 import "./styles/LowRatingPage.css";
-import RatingQuestion from "../components/RatingQuestion";
-import { HeaderContext } from "../../HeaderContext";
+import RatingQuestion from "../../components/RatingQuestion";
+import { HeaderContext } from "../../../HeaderContext";
 
 // Rating Component
 const LowRatingPage = () => {
@@ -15,7 +15,9 @@ const LowRatingPage = () => {
   const {setHeaderAnimated, setHeaderExtended} = useContext(HeaderContext);
 
   const navigate = useNavigate();
-  const {user, setUser} = useContext(UserContext);
+  const [disableButton, setDisableButton] = useState(true);
+
+  const {jwtToken, setJwtToken, bulkData, setBulkData} = useContext(UserContext);
 
   // Get the id from the url subdomain.basedomain.es/id/...
   const { id } = useParams();
@@ -72,10 +74,16 @@ const LowRatingPage = () => {
     });
   }, []);
 
+  useEffect(() => {
+      console.log("bulkData: ", bulkData);
+  }, []);
+
+
   // Handles form submit event
   const handleSubmit = (evt) => {
-    let ret = false;
     evt.preventDefault();
+    
+    let ret = false;
     // Iterate over the questions and check if any of them has a rating of 0
     setQuestions(prevQuestions => {
       return prevQuestions.map(question => {
@@ -88,25 +96,50 @@ const LowRatingPage = () => {
         return question;
       });
     });
-
-
     if (ret) {
       return;
     }
+
+    //Setting context to new values
+    const bulkQuestions = {};
+    questions.forEach(question => {
+      bulkQuestions[question.id] = {
+        questionId: question.id,
+        rating: question.rating,
+      };
+    });
+
+    setBulkData(prevData => ({
+      ...prevData,
+      questions: bulkQuestions,
+      lastPage: URLSNAV.LOW_RATING(id),
+    }));
+
+    console.log("bulkData: ", bulkData);
+
     goToNextPage();
   };
 
   // Sets the rating value
   const setRatingQ = (question) => (rating) => {
     question.rating = rating;
+    checkIfDisableButton();
   }
+
+  // Checks if the button should be disabled
+  const checkIfDisableButton = () => {
+    let disable = false;
+    questions.forEach(question => {
+      if (question.rating === 0) {
+        disable = true;
+      }
+    });
+    setDisableButton(disable);
+  }
+
 
   // Changes UI elements based on the rating value
   const goToNextPage = () => {
-    setUser({
-      ...user,
-      lastPage: URLSNAV.LOW_RATING(id),
-    });
 
     setQuestions(prevQuestions => {
       return prevQuestions.map(question => ({
@@ -117,7 +150,7 @@ const LowRatingPage = () => {
 
     // wait for animation to finish and then navigate
     setTimeout(() => {
-      navigate(URLSNAV.FEEDBACK(id));
+      navigate(URLSNAV.LOW_FEEDBACK(id));
     }, 250);
   };
 
@@ -142,7 +175,7 @@ const LowRatingPage = () => {
             key={question.id}
             in={question.show}
             timeout={300}
-            classNames="rating-container-animation"
+            classNames="fade-in-up"
             nodeRef={questionReference}
             unmountOnExit
           >
@@ -163,7 +196,7 @@ const LowRatingPage = () => {
         key={"submit"}
         in={questions[0].show}
         timeout={300}
-        classNames="rating-container-animation"
+        classNames="fade-in-up"
         nodeRef={btnReference}
         unmountOnExit
       >
@@ -173,7 +206,7 @@ const LowRatingPage = () => {
             className={"submit-button"
           /* if any question has a rating of zero, the button must have added 'disabled' to the 
             className */
-          + (questions.some(question => question.rating === 0) ? " disabled" : "")}
+          + (disableButton ? " disabled" : "")}
             value="Enviar reseña"
           />
         </div>

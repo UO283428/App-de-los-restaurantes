@@ -1,6 +1,7 @@
 const db = require('../dbSetup/database');
 
 async function getFrontPageImageById(id) {
+    console.log(id);
     const [rows] = await db.query(`SELECT header_image_link FROM restaurants WHERE name = ?`, [id]);
     console.log(rows);
     if (rows.length) {

@@ -4,21 +4,24 @@ Estoy trabajando en:
             Images
             Questions
         Repositories needed.
-        
-        TODO: Conexion with the database have not been stablished.
+
+        TODO: Retreive the links info.
+        TODO: Links should be asked to the database
+        TODO: Routes should be re-think.
+        TODO: Store data on the database.
 
 
     Frontend:
         Routers work with the URLS y LazyLoading.
-        Router corrctly configured to work as a single page application.
+        Router correctly configured to work as a single page application.
         Petitions to the API have been stablished.
-        Animations work smoothly.
-        
-        Rating, LowRating and Header work fine.
-        
-        TODO: Validación de campos. Mínimo de una estrella
-        TOOD: Márgenes en los laterales para las preguntas.
-        TODO: Añadir feedback aptico.
-        TODO: El feedback debe de ser un cuadro de texto.
-        TODO: Página final en la que se de las gracias por el feedback.
-        TODO: Página con los links para Google Maps, TripAdvisor...
+        Animations work smoothly, in, out and header.
+        Rating, LowRating, FeedbackPage, ThankYouPage and Header work fine.
+        Feedback is a text area.
+        Field validation. Text fields remaining.
+
+        TODO: Linking page for Google Maps, TripAdvisor, Yelp...
+        TODO: Add aptic feedback.
+        TODO: Pedir el email después de un feedback negativo
+        TODO: Pedir el email después de haber rellenado
+        TODO: Política de cookies

@@ -6,5 +6,6 @@ export const API_URLS = {
   frontPageImage: id => `${API_BASE_URL}/api/front-page-image?id=${id}`,
   logoImage: id => `${API_BASE_URL}/api/logo-image?id=${id}`,
   questions: id => `${API_BASE_URL}/api/restaurant-questions?id=${id}`,
+  links: id => `${API_BASE_URL}/api/restaurant-links?id=${id}`,
   // Add more API endpoints here
 };

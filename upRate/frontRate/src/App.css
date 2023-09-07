@@ -7,25 +7,3 @@ html, body {
   overflow: auto; /* Permite el desplazamiento si el contenido es demasiado grande */
   font-family: Arial, sans-serif; /* Beautiful font */
 }
-
-/*
-.IsReviewing-enter {
-  transform: scale(0.9);
-}
-
-.IsReviewing-enter-active {
-  opacity: 1;
-  transform: translateX(0);
-  transition: opacity 500ms ease-in-out, transform 500ms ease-in-out;
-}
-
-.IsReviewing-exit {
-  opacity: 1;
-}
-
-.IsReviewing-exit-active {
-  opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 500ms ease-in-out, transform 500ms ease-in-out;
-}
-*/

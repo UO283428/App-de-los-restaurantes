@@ -1,0 +1,8 @@
+/*
+    I want margins and the text in white, big letters
+*/
+.thanks-message {
+    margin: 3em 1em;
+    color: white;
+    font-size: 30px;
+}
