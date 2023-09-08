@@ -9,103 +9,103 @@ import "./styles/LowRatingPage.css";
 import RatingQuestion from "../../components/RatingQuestion";
 import { HeaderContext } from "../../../HeaderContext";
 
-// Rating Component
+
+/**
+ *  The LowRatingPage is a React component used to render a page where users rate some questions.
+ *  The user can't submit the form until they rate every question.
+ *  When they attempt to submit without rating all questions, they're presented with an error message.
+ *  On successful submission, the user is navigated to another page.
+ *  The questions are fetched from an external API and displayed with an entry animation.
+ */
 const LowRatingPage = () => {
-
-  const {setHeaderAnimated, setHeaderExtended} = useContext(HeaderContext);
-
+  const { setHeaderAnimated, setHeaderExtended } = useContext(HeaderContext);
   const navigate = useNavigate();
-  const [disableButton, setDisableButton] = useState(true);
-
-  const {jwtToken, setJwtToken, bulkData, setBulkData} = useContext(UserContext);
-
-  // Get the id from the url subdomain.basedomain.es/id/...
+  const { jwtToken, setJwtToken, bulkData, setBulkData } = useContext(UserContext);
   const { id } = useParams();
 
-  // State definition
   const [questions, setQuestions] = useState([{
-        id: "none",
-        content: "none",
-        rating: 0,
-        show: false,
-    }]);
+    id: "none",
+    content: "none",
+    rating: 0,
+    show: false,
+  }]);
   const [isLoading, setIsLoading] = useState(true);
-  const questionReferences = React.useRef([]);
+  const [disableButton, setDisableButton] = useState(true);
 
-  // Animation fade-in fade-out
+  /**
+   *  This useEffect handles both the animation of the questions and fetching the questions from an external API.
+   */
   useEffect(() => {
-    setQuestions(prevQuestions => {
-      return prevQuestions.map(question => ({
-        ...question,
-        show: false,
-      }));
-    });
 
-    const timer = setTimeout(() => {
-      setQuestions(prevQuestions => {
-        return prevQuestions.map(question => ({
-          ...question,
-          show: true,
-        }));
-      });
-    }, 250);
+    /**
+     *  Initially, it sets all questions to be hidden (show: false).
+     *  After a short delay (250 ms), it displays them (show: true) to give an animation effect.
+     */
+    const animateQuestions = async () => {
+      setQuestions(prevQuestions => prevQuestions.map(q => ({ ...q, show: false })));
+      await new Promise(resolve => setTimeout(resolve, 250));
+      setQuestions(prevQuestions => prevQuestions.map(q => ({ ...q, show: true })));
+    };
 
-    return () => clearTimeout(timer);
-  }, []);
-
-  // fetching the questions from the API
-  useEffect(() => {
-    fetch(API_URLS.questions(id))
-    .then(response => response.json())
-    .then(data => {
-        const fetchedQuestions = data.questions.map(question => ({
-            id: question.id,
-            content: question.content,
-            rating: 0,
-            show: false,
+    /**
+     *  It fetches the questions from an API and sets them to the component's state.
+     *  If there's an error during fetching, it logs the error but still updates the state to reflect that loading is done.
+     */
+    const fetchQuestions = async () => {
+      try {
+        const response = await fetch(API_URLS.questions(id));
+        const data = await response.json();
+        const fetchedQuestions = data.questions.map(q => ({
+          id: q.id,
+          content: q.content,
+          rating: 0,
+          show: false,
         }));
         setQuestions(fetchedQuestions);
         setIsLoading(false);
-        console.log("fetched questions: ", fetchedQuestions);
-    })
-    .catch(error => {
+      } catch (error) {
         console.error("Error fetching questions:", error);
         setIsLoading(false);
-    });
+      }
+    };
+
+    animateQuestions();
+    fetchQuestions();
   }, []);
 
-  useEffect(() => {
-      console.log("bulkData: ", bulkData);
-  }, []);
+  /**
+   *  Checks if any question hasn't been rated by the user. It returns a boolean value.
+   *  @returns boolean value indicating if any question hasn't been rated by the user.
+   */
+  const isAnyQuestionUnrated = () => questions.some(q => q.rating === 0);
 
-
-  // Handles form submit event
+  /**
+   *  Handles the form submission.
+   *  For each unrated question, it sets an error message asking the user to rate.
+   *   If all questions are rated, it updates the bulkData context with the new ratings and navigates the user to another page.
+   */
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    
-    let ret = false;
-    // Iterate over the questions and check if any of them has a rating of 0
-    setQuestions(prevQuestions => {
-      return prevQuestions.map(question => {
-        if (question.rating === 0) {
-          question.errorMessage = "Por favor, selecciona al menos una estrella.";
-          ret = true;
-        } else {
-          question.errorMessage = "";
-        }
-        return question;
-      });
+
+    const newQuestions = questions.map(question => {
+      if (question.rating === 0) {
+        return { ...question, errorMessage: "Por favor, selecciona al menos una estrella." };
+      } else {
+        return { ...question, errorMessage: "" };
+      }
     });
-    if (ret) {
+
+    setQuestions(newQuestions);
+
+    if (isAnyQuestionUnrated()) {
       return;
     }
 
-    //Setting context to new values
     const bulkQuestions = {};
-    questions.forEach(question => {
-      bulkQuestions[question.id] = {
-        questionId: question.id,
-        rating: question.rating,
+    questions.forEach(q => {
+      bulkQuestions[q.id] = {
+        questionId: q.id,
+        rating: q.rating,
       };
     });
 
@@ -115,105 +115,73 @@ const LowRatingPage = () => {
       lastPage: URLSNAV.LOW_RATING(id),
     }));
 
-    console.log("bulkData: ", bulkData);
-
     goToNextPage();
   };
 
-  // Sets the rating value
-  const setRatingQ = (question) => (rating) => {
-    question.rating = rating;
-    checkIfDisableButton();
-  }
+  /**
+   *  It's a curried function that returns another function.
+   *  The inner function sets the rating for a specific question when the user rates it.
+   *  After setting the rating, it checks whether to disable the submission button or not based on the ratings of all questions.
+   *  @param {string} questionId - The id of the question to set the rating for.
+   *  @returns {function} - A function that sets the rating for a specific question.
+   */
+  const setRatingQ = (questionId) => (rating) => {
+    setQuestions(prevQuestions => prevQuestions.map(q => q.id === questionId ? { ...q, rating } : q));
+    setDisableButton(isAnyQuestionUnrated());
+  };
 
-  // Checks if the button should be disabled
-  const checkIfDisableButton = () => {
-    let disable = false;
-    questions.forEach(question => {
-      if (question.rating === 0) {
-        disable = true;
-      }
-    });
-    setDisableButton(disable);
-  }
-
-
-  // Changes UI elements based on the rating value
+  /**
+   *  Triggers the exit animation for the questions and then, after a short delay
+   *  (corresponding to the animation duration), navigates the user to another page.
+   */
   const goToNextPage = () => {
+    setQuestions(prevQuestions => prevQuestions.map(q => ({ ...q, show: false })));
 
-    setQuestions(prevQuestions => {
-      return prevQuestions.map(question => ({
-        ...question,
-        show: false,
-      }));
-    });
-
-    // wait for animation to finish and then navigate
     setTimeout(() => {
       navigate(URLSNAV.LOW_FEEDBACK(id));
     }, 250);
   };
 
-  const btnReference = React.createRef();
-
- return (
-<form onSubmit={handleSubmit} className="review-form">
-  {isLoading ? (
-    <div className="loading">
-      <Text className="loading-text" text="Cargando..." />
-    </div>
-  ) : (
-    <>
-      {questions.map((question, index) => {
-        const questionReference = React.createRef(); // Create a ref
-
-        // Store the ref in the array for each question
-        questionReferences.current[index] = questionReference;
-
-        return (
+  return (
+    <form onSubmit={handleSubmit} className="review-form">
+      {isLoading ? (
+        <div className="loading">
+          <Text className="loading-text" content="Cargando..." />
+        </div>
+      ) : (
+        <>
+          {questions.map(question => (
+            <CSSTransition
+              key={question.id}
+              in={question.show}
+              timeout={300}
+              classNames="fade-in-up"
+              unmountOnExit
+            >
+              <div className="rating-container">
+                <RatingQuestion mainText={question.content} setRating={setRatingQ(question.id)} />
+                {question.errorMessage && <div className="error-message">{question.errorMessage}</div>}
+              </div>
+            </CSSTransition>
+          ))}
           <CSSTransition
-            key={question.id}
-            in={question.show}
+            key={"submit"}
+            in={questions[0]?.show}
             timeout={300}
             classNames="fade-in-up"
-            nodeRef={questionReference}
             unmountOnExit
           >
-            <div ref={questionReference} className={"rating-container"}>
-              <RatingQuestion
-                mainText={question.content}
-                setRating={setRatingQ(question)}
+            <div className="rating-container">
+              <input
+                type="submit"
+                className={`submit-button${disableButton ? " disabled" : ""}`}
+                value="Enviar reseña"
               />
-              
-              {(question.errorMessage != "") && (
-                <div className="error-message">{question.errorMessage}</div>
-              )}
             </div>
           </CSSTransition>
-        );
-      })}
-      <CSSTransition
-        key={"submit"}
-        in={questions[0].show}
-        timeout={300}
-        classNames="fade-in-up"
-        nodeRef={btnReference}
-        unmountOnExit
-      >
-        <div ref={btnReference} className={"rating-container"}>
-          <input
-            type="submit"
-            className={"submit-button"
-          /* if any question has a rating of zero, the button must have added 'disabled' to the 
-            className */
-          + (disableButton ? " disabled" : "")}
-            value="Enviar reseña"
-          />
-        </div>
-      </CSSTransition>
-    </>
-  )}
-</form>
+        </>
+      )}
+    </form>
   );
 };
 

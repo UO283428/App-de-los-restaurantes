@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import './styles/Link.css';
 
 function Link({ src, url, alt, className }) {
-    return (    
-    <a href={url} >
-      <div className={className + " link-container"}>
-            <img
-            className="Image"
-            src={src}
-            alt={alt}
-            />
-      </div>
-    </a>
+    return (
+    <div className={"link-container" + className }>
+        <a href={url} >
+          <img
+          className="Image"
+          src={src}
+          alt={alt}
+          />
+        </a>
+    </div>
     );
 }
 
@@ -28,7 +28,6 @@ Link.defaultProps = {
     alt: 'Image', // default value if alt prop isn't provided
     src: 'https://logos-world.net/wp-content/uploads/2022/01/Google-Maps-Logo.png',
     className: '',
-
 };
 
 export default Link;

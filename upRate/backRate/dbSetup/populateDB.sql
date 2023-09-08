@@ -1,5 +1,5 @@
 -- Inserting sample restaurants
-INSERT INTO restaurants (id, name, header_image_link, logo_image_link, average_rating) VALUES
+INSERT INTO restaurants (restaurant_id, name, header_image_link, logo_image_link, average_rating) VALUES
 (1, 'goikoGrill', 'https://www.justretail.news/wp-content/uploads/2021/08/Goiko-H2O-noticias-retail-2-scaled.jpg',
     'https://boldflowco.com/wp-content/uploads/2023/07/logo-goiko.png', 4.5),
 

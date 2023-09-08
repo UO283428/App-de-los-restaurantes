@@ -7,6 +7,7 @@ import MainLayout from './main-rating/layouts/MainLayout';
 import LowRatingPage from './main-rating/pages/lowRating/LowRatingPage';
 import LeaveFeedbackPage from './main-rating/pages/highRating/LeaveFeedbackPage';
 import { URLS, URLSREL } from './main-rating/constants/urls';
+import { API_URLS } from './config';
 
 /*
 import RatingPage from './main-rating/pages/RatingPage';
@@ -40,7 +41,7 @@ function App() {
   useEffect(() => {
     const fetchToken = async () => {
         try {
-            const response = await fetch('http://localhost:4000/generate-token');
+            const response = await fetch(API_URLS.token);
             const data = await response.json();
             setJwtToken(data.token);
         } catch (error) {

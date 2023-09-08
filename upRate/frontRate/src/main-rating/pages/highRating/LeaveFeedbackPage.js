@@ -9,118 +9,168 @@ import { HeaderContext } from '../../../HeaderContext';
 import './styles/LeaveFeedbackPage.css';
 
 
+/**
+ *  This component is designed to provide feedback functionality.
+ *  The user is encouraged to leave a positive review on certain platforms after having a satisfactory experience.
+ *  
+ *  The component uses the CSSTransition component from the react-transition-group library to manage animations, 
+ *  transitions like fading in and out are essential to the component's visual effects.
+ *  
+ *  The component uses conditional rendering based on the isLoading state. If data is still being fetched, 
+ *  a loading message is displayed. Once data fetching is complete, the links are displayed in a container.
+ *  Each link uses its own CSSTransition to manage its individual animations, based on its 'show' property. 
+ * 
+ *  The component uses React Router's hooks, useNavigate and useParams, as it's part of a single-page application
+ *  (SPA) with navigational capabilities.
+ */
 const LeaveFeedbackPage = () => {
-
-  const {setHeaderAnimated, setHeaderExtended} = useContext(HeaderContext);
+  const { setHeaderAnimated, setHeaderExtended } = useContext(HeaderContext);
   const [links, setLinks] = useState([{
     id: "none",
     src: "https://logos-world.net/wp-content/uploads/2022/01/Google-Maps-Logo.png",
     url: "https://www.google.com",
-  },
-  {
+    show: false,
+  },  {
     id: "none",
     src: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/TripAdvisor_Logo.svg/2560px-TripAdvisor_Logo.svg.png",
     url: "https://www.google.com",
-  }]);
+    show: false,
+  },  {
+    id: "none",
+    src: "https://logos-world.net/wp-content/uploads/2022/01/Google-Maps-Logo.png",
+    url: "https://www.google.com",
+    show: false,
+  },  {
+    id: "none",
+    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/TripAdvisor_Logo.svg/2560px-TripAdvisor_Logo.svg.png",
+    url: "https://www.google.com",
+    show: false,
+  },]);
   const [isLoading, setIsLoading] = useState(true);
+  const [show, setShow] = useState(false);
   const linksReference = React.useRef([]);
+  const leaveHeaderReferene = React.useRef();
   const navigate = useNavigate();
   const { id } = useParams();
 
-  // Set header animation
+  /**
+   *  Resets the 'show' property of every link in the links state to false.
+   *  This means none of the links will be displayed as they are set up to show/hide based on this property.
+   *  @returns 
+   */
+  const resetLinksShow = () => setLinks(prevLinks => prevLinks.map(link => ({ ...link, show: false })));
+
+  /**
+   *  Header Configuration and Data Fetching:
+   *  When the component mounts, this hook sets the header to be animated and not extended
+   *    using context methods (setHeaderAnimated and setHeaderExtended).
+   *  Then sets a timer to make the component show after 50ms (a very short delay).
+   *  This provides a fade-in animation and ensures it properly works.
+   *  The hook also fetches link data from an API based on the id parameter from the URL.
+   *  Once the links are fetched, they're stored in the links state.
+   *  If there's an error, it simply logs the error and stops loading.
+   */
   useEffect(() => {
     setHeaderAnimated(true);
     setHeaderExtended(false);
-  }, []);
+    setTimeout(() => {
+      setShow(true);
+    }, 50);
 
-  // Animation fade-in fade-out
-  useEffect(() => {
-    setLinks(prevLinks => {
-      return prevLinks.map(link => ({
-        ...link,
-        show: false,
-      }));
-    });
-
-    const timer = setTimeout(() => {
-      setLinks(prevLinks => {
-        return prevLinks.map(link => ({
-          ...link,
-          show: true,
-        }));
-      });
-    }, 250);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  // fetching the links from the API
-  useEffect(() => {
     fetch(API_URLS.links(id))
-    .then(response => response.json())
-    .then(data => {
+      .then(response => response.json())
+      .then(data => {
         const fetchedLinks = data.links.map(link => ({
-            id: link.id,
-            content: link.content,
-            url: link.url,
+          id: link.id,
+          content: link.content,
+          url: link.url,
+          show: false
         }));
         setLinks(fetchedLinks);
         setIsLoading(false);
-        console.log("fetchedLinks: ", fetchedLinks);
-    })
-    .catch(error => {
-        console.log("Error fetching links: ", error);
+      })
+      .catch(error => {
+        console.error("Error fetching links:", error);
         setIsLoading(false);
-    });
-  }, []);
+      });
+  }, [id]);
 
+  /**
+   *  Links Animation:
+   *
+   *  After links data is fetched and the links state changes, this hook triggers a chain reaction.
+   *  It starts showing each link one after another, each with a delay of 0.25 second (250ms).
+   *  This provides a cascading display effect for the links.
+   */
+  useEffect(() => {
+    const showLink = (index) => {
+      if (index >= links.length) return;
 
-
-  // Changes UI elements based on the rating value
-  const goToNextPage = () => {
-
-    setLinks(prevLinks => {
-      return prevLinks.map(link => ({
-        ...link,
-        show: false,
+      setLinks(prevLinks => prevLinks.map((link, idx) => {
+        if (idx === index) {
+          return {
+            ...link,
+            show: true
+          };
+        }
+        return link;
       }));
-    });
 
-    // wait for animation to finish and then navigate
+      setTimeout(() => showLink(index + 1), 200); // adjust delay as needed
+    };
+
+    setTimeout(() => showLink(0), 250); // Start after a half-second delay
+  }, [links]);
+
+  /**
+   * First, it resets the 'show' property of every link to false (using the resetLinksShow function).
+   * Then, after a delay of 2.5 seconds (2500ms), it navigates the user to a different page (URLSNAV.LOW_FEEDBACK(id)).
+   */
+  const goToNextPage = () => {
+    resetLinksShow();
+
     setTimeout(() => {
       navigate(URLSNAV.LOW_FEEDBACK(id));
-    }, 250);
+    }, 2500);
   };
 
- return (<>
-  {isLoading ? (
-    <div className="loading">
-      <Text className="loading-text" text="Cargando..." />
-    </div>
-  ) : (
-    <div className='leave-feedback-container'>
-      {links.map((link, index) => {
-        const linkReference = React.createRef(); // Create a ref
-
-        // Store the ref in the array for each question
-        linksReference.current[index] = linkReference;
-
-        return (
-          <CSSTransition
-            key={link.id}
-            in={link.show}
-            timeout={300}
-            classNames="rating-container-animation"
-            nodeRef={linkReference}
-            unmountOnExit
-          >
-            <Link ref={linkReference} src={link.src} url={link.url} alt={link.content} />
-          </CSSTransition>
-        );
-      })}
-    </div>
-  )}
-  </>
+  return (
+    <>
+      <CSSTransition
+        timeout={500}
+        classNames="fade-in-up"
+        nodeRef={leaveHeaderReferene}
+        in={show}
+        unmountOnExit
+      >
+        <div ref={leaveHeaderReferene} className="leave-feedback-header">
+          <Text className="leave-feedback-title" content="¡Nos alegra mucho que haya quedado satisfecho!" />
+          <Text className="leave-feedback-text" content="Le agradeceriamos si pudiera dejar una review positiva en alguna de estas plataformas." />
+        </div>
+      </CSSTransition>
+      {isLoading ? (
+        <div className="loading">
+          <Text className="loading-text" content="Cargando..." />
+        </div>
+      ) : (
+        <div className='leave-feedback-container'>
+          {links.map((link, index) => (
+            <CSSTransition
+              key={link.id}
+              in={link.show}
+              timeout={300}
+              classNames="fade-in-up"
+              nodeRef={linksReference.current[index]}
+              unmountOnExit
+            >
+              <div className="cosas" ref={linksReference.current[index]}>
+                <Link src={link.src} url={link.url} alt={link.content} />
+              </div>
+            </CSSTransition>
+          ))}
+        </div>
+      )}
+    </>
   );
 };
 
