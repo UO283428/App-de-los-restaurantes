@@ -6,6 +6,7 @@ import { URLSNAV } from '../../constants/urls';
 import { HeaderContext } from '../../../HeaderContext';
 import { UserContext } from '../../../UserContext';
 import './styles/FeedbackPage.css';
+import { API_URLS } from '../../../config';
 
 
 /**
@@ -113,9 +114,14 @@ const FeedbackPage = () => {
         evt.preventDefault();
         if (!validateFeedback()) return;
 
-        updateBulkData();
-        
+        handleDataOperation();
         goToNextPage();
+    };
+
+    const handleDataOperation = async () => {
+        await updateBulkData();
+        await sendBulkData();
+        await console.log(bulkData);
     };
 
     /**
@@ -127,6 +133,29 @@ const FeedbackPage = () => {
             finalText: feedbackText,
             lastPage: URLSNAV.LOW_FEEDBACK(id)
         }));
+    }
+
+    /**
+     * Sends the bulk data to the backend.
+     */
+    const sendBulkData = () => {
+        fetch(API_URLS.bulkData(id), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({bulkData: bulkData})
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to send bulk data');
+            }
+            // handle successful response
+        })
+        .catch(error => {
+            console.error(error);
+            // handle error
+        });
     }
 
     /**

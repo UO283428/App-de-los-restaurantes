@@ -19,6 +19,8 @@ Estoy trabajando en:
         Field validation. Text fields remaining.
 
         TODO: Send bulk data to the API
+        TODO: Not to loose the data when page is reloaded
+        TODO: Control the proper flow of the user
         TODO: Add aptic feedback.
         TODO: Pedir el email después de un feedback negativo
         TODO: Pedir el email después de haber rellenado

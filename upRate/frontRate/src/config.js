@@ -8,5 +8,6 @@ export const API_URLS = {
   questions: id => `${API_BASE_URL}/api/restaurant-questions?id=${id}`,
   links: id => `${API_BASE_URL}/api/restaurant-links?id=${id}`,
   token: `${API_BASE_URL}/api/generate-token`,
+  bulkData: id => `${API_BASE_URL}/api/bulk-data?id=${id}`,
   // Add more API endpoints here
 };

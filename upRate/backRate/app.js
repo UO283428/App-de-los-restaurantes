@@ -10,6 +10,7 @@ const usersRouter = require('./routes/users');
 const imageRouter = require('./routes/api-webapp/imageRoutes'); // added by me
 const questionsRouter = require('./routes/api-webapp/questionRoutes'); // added by me
 const linkRouter = require('./routes/api-webapp/linkRoutes'); // added by me
+const bulkdataRouter = require('./routes/api-webapp/bulkdataRouter'); // added by me
 const JWTRouter = require('./routes/JWTRouter'); // added by me
 const jwtAuth = require('./middlewear/jwtAuth'); // added by me
 
@@ -34,6 +35,7 @@ app.use('/users', usersRouter);
 // define routes for delivering images
 app.use('/', imageRouter);
 app.use('/', questionsRouter);
+app.use('/', bulkdataRouter); // added by me
 app.use('/', JWTRouter); // added by me
 app.use('/', linkRouter); // added by me
 

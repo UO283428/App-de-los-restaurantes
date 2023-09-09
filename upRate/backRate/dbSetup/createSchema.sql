@@ -1,5 +1,4 @@
 DROP DATABASE IF EXISTS uprateDB;
-DROP DATABASE IF EXISTS upRate;
 CREATE DATABASE uprateDB;
 USE uprateDB;
 
@@ -9,7 +8,8 @@ CREATE TABLE restaurants (
     restaurant_name VARCHAR(255) NOT NULL,
     header_image_link VARCHAR(1024),
     logo_image_link VARCHAR(1024),
-    average_rating FLOAT DEFAULT 0
+    average_rating FLOAT DEFAULT 0,
+    number_of_ratings INT DEFAULT 0
 );
 
 CREATE TABLE questions (
@@ -17,17 +17,24 @@ CREATE TABLE questions (
     restaurant_id INT,
     question_text VARCHAR(1024) NOT NULL,
     average_rating FLOAT DEFAULT 0,
+    number_of_ratings INT DEFAULT 0,
     FOREIGN KEY (restaurant_id) REFERENCES restaurants(restaurant_id)
 );
 
-CREATE TABLE ratings (
+CREATE TABLE question_ratings (
     rating_id INT PRIMARY KEY AUTO_INCREMENT,
-    restaurant_id INT,
     question_id INT,
     rating_value INT CHECK (rating_value >= 0 AND rating_value <= 5),
     rating_date DATE,
-    FOREIGN KEY (restaurant_id) REFERENCES restaurants(restaurant_id),
     FOREIGN KEY (question_id) REFERENCES questions(question_id)
+);
+
+CREATE TABLE general_ratings (
+    rating_id INT PRIMARY KEY AUTO_INCREMENT,
+    restaurant_id INT,
+    rating_value INT CHECK (rating_value >= 0 AND rating_value <= 5),
+    rating_date DATE,
+    FOREIGN KEY (restaurant_id) REFERENCES restaurants(restaurant_id)
 );
 
 CREATE TABLE text_feedback (

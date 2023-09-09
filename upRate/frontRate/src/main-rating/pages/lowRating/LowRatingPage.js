@@ -103,14 +103,11 @@ const LowRatingPage = () => {
       return;
     }
 
-    const bulkQuestions = {};
-    questions.forEach(q => {
-      bulkQuestions[q.id] = {
-        questionId: q.id,
-        rating: q.rating,
-      };
-    });
-
+    const bulkQuestions = questions.map(q => ({
+      questionId: q.id,
+      rating: q.rating,
+    }));
+    
     setBulkData(prevData => ({
       ...prevData,
       questions: bulkQuestions,
@@ -119,6 +116,10 @@ const LowRatingPage = () => {
 
     goToNextPage();
   };
+
+  useEffect(() => {
+    console.log("bulkData: ", bulkData);
+  }, [bulkData]);
 
   /**
    *  It's a curried function that returns another function.

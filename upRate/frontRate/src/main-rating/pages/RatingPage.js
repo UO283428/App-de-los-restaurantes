@@ -73,10 +73,13 @@ const RatingPage = () => {
       lastPage: URLSNAV.RATING(id),
     }));
 
-    console.log("bulkData: ", bulkData);
-
     goToNextPage();
   };
+
+  useEffect(() => {
+    console.log("bulkData: ", bulkData);
+  }, [bulkData]);
+
 
   // Changes UI elements based on the rating value
   const goToNextPage = () => {
