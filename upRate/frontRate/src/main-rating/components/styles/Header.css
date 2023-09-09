@@ -68,7 +68,7 @@
   
 .front-page-image.animated {
   /* Adding a transition */
-  transition: height 350ms ease-in-out;
+  transition: height 450ms ease-in-out;
 }
 
 
@@ -85,5 +85,5 @@
 
 .logo-image.animated {
   /* Styles for the extended header state */
-  transition: height 350ms ease-in-out, transform 350ms ease-in-out;
+  transition: height 450ms ease-in-out, transform 450ms ease-in-out;
 }

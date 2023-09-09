@@ -99,7 +99,7 @@ const LeaveFeedbackPage = () => {
       setTimeout(() => showLink(index + 1), 200); // adjust delay as needed
     };
 
-    setTimeout(() => showLink(0), 250); // Start after a half-second delay
+    setTimeout(() => showLink(0), 400); // Start after a half-second delay
   }, [links]);
 
   /**
@@ -117,7 +117,7 @@ const LeaveFeedbackPage = () => {
   return (
     <>
       <CSSTransition
-        timeout={500}
+        timeout={400}
         classNames="fade-in-up"
         nodeRef={leaveHeaderReferene}
         in={show}
@@ -138,7 +138,7 @@ const LeaveFeedbackPage = () => {
             <CSSTransition
               key={link.id}
               in={link.show}
-              timeout={300}
+              timeout={400}
               classNames="fade-in-up"
               nodeRef={linksReference.current[index]}
               unmountOnExit

@@ -107,7 +107,7 @@
 .fade-in-up-enter-active {
 opacity: 1;
 transform: translateY(0%);
-transition: opacity 300ms ease-in, transform 200ms ease-in;
+transition: opacity 400ms ease-in, transform 350ms ease-in;
 }
 
 .fade-in-up-exit {
@@ -118,7 +118,7 @@ transform: translateY(0%);
 .fade-in-up-exit-active {
 opacity: 0;
 transform: translateY(-30%);
-transition: opacity 300ms ease-in, transform 200ms ease-in;
+transition: opacity 400ms ease-in, transform 350ms ease-in;
 }
 
 /* Fade in down animation */
@@ -131,7 +131,7 @@ transition: opacity 300ms ease-in, transform 200ms ease-in;
 .fade-in-down-enter-active {
     opacity: 1;
     transform: translateY(0%);
-    transition: opacity 300ms ease-in, transform 200ms ease-in;
+    transition: opacity 400ms ease-in, transform 350ms ease-in;
 }
 
 .fade-in-down-exit {
@@ -142,7 +142,7 @@ transition: opacity 300ms ease-in, transform 200ms ease-in;
 .fade-in-down-exit-active {
     opacity: 0;
     transform: translateY(30%);
-    transition: opacity 300ms ease-in, transform 200ms ease-in;
+    transition: opacity 400ms ease-in, transform 350ms ease-in;
 }
 
 /* Fade in up out down animation */
@@ -155,7 +155,7 @@ transition: opacity 300ms ease-in, transform 200ms ease-in;
 .fade-in-up-out-down-enter-active {
     opacity: 1;
     transform: translateY(0%);
-    transition: opacity 300ms ease-in, transform 200ms ease-in;
+    transition: opacity 400ms ease-in, transform 350ms ease-in;
 }
 
 .fade-in-up-out-down-exit {
@@ -166,5 +166,5 @@ transition: opacity 300ms ease-in, transform 200ms ease-in;
 .fade-in-up-out-down-exit-active {
     opacity: 0;
     transform: translateY(30%);
-    transition: opacity 300ms ease-in, transform 200ms ease-in;
+    transition: opacity 400ms ease-in, transform 350ms ease-in;
 }

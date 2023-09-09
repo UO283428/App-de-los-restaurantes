@@ -3,16 +3,14 @@ Estoy trabajando en:
         Routers answer correctly to petitions for
             Images
             Questions
-        Repositories needed.
+        Repositories done for images, questions and links.
 
-        TODO: Retreive the links info.
-        TODO: Links should be asked to the database
-        TODO: Routes should be re-think.
         TODO: Store data on the database.
+        TODO: Ensure security
 
 
     Frontend:
-        Routers work with the URLS y LazyLoading.
+        Routers work with the URLS and LazyLoading.
         Router correctly configured to work as a single page application.
         Petitions to the API have been stablished.
         Animations work smoothly, in, out and header.
@@ -20,7 +18,7 @@ Estoy trabajando en:
         Feedback is a text area.
         Field validation. Text fields remaining.
 
-        TODO: Linking page for Google Maps, TripAdvisor, Yelp...
+        TODO: Send bulk data to the API
         TODO: Add aptic feedback.
         TODO: Pedir el email después de un feedback negativo
         TODO: Pedir el email después de haber rellenado

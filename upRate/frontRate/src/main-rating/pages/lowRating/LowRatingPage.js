@@ -45,7 +45,7 @@ const LowRatingPage = () => {
      */
     const animateQuestions = async () => {
       setQuestions(prevQuestions => prevQuestions.map(q => ({ ...q, show: false })));
-      await new Promise(resolve => setTimeout(resolve, 250));
+      await new Promise(resolve => setTimeout(resolve, 50));
       setQuestions(prevQuestions => prevQuestions.map(q => ({ ...q, show: true })));
     };
 
@@ -65,13 +65,13 @@ const LowRatingPage = () => {
         }));
         setQuestions(fetchedQuestions);
         setIsLoading(false);
+        animateQuestions();
       } catch (error) {
         console.error("Error fetching questions:", error);
         setIsLoading(false);
       }
     };
 
-    animateQuestions();
     fetchQuestions();
   }, []);
 
@@ -148,7 +148,7 @@ const LowRatingPage = () => {
 
     setTimeout(() => {
       navigate(URLSNAV.LOW_FEEDBACK(id));
-    }, 250);
+    }, 400);
   };
 
   return (
@@ -163,7 +163,7 @@ const LowRatingPage = () => {
             <CSSTransition
               key={question.id}
               in={question.show}
-              timeout={300}
+              timeout={400}
               classNames="fade-in-up"
               unmountOnExit
             >
@@ -176,7 +176,7 @@ const LowRatingPage = () => {
           <CSSTransition
             key={"submit"}
             in={questions[0]?.show}
-            timeout={300}
+            timeout={400}
             classNames="fade-in-up"
             unmountOnExit
           >

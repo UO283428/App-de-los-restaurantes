@@ -98,6 +98,8 @@ const FeedbackPage = () => {
         } else if (feedbackText.length > 500) {
             setErrorMessage('Por favor, no escribas más de 500 caracteres');
             return false;
+        } else {
+            setErrorMessage('');
         }
         return true;
     }
@@ -135,7 +137,7 @@ const FeedbackPage = () => {
         setShow(false);
         setHeaderAnimated(true);
         setHeaderExtended(true);
-        setTimeout(() => navigate(URLSNAV.LOW_THANX(id)), 300);
+        setTimeout(() => navigate(URLSNAV.LOW_THANX(id)), 400);
     }
 
     return (
@@ -143,7 +145,7 @@ const FeedbackPage = () => {
             <CSSTransition
                 in={show}
                 nodeRef={ratingContainerRef}
-                timeout={300}
+                timeout={400}
                 classNames="fade-in-up-out-down"
                 unmountOnExit
             >
@@ -155,12 +157,11 @@ const FeedbackPage = () => {
                         rows="1"
                         onChange={handleInputChange}
                     />
-                    {errorMessage && <div className="error-message">{errorMessage}</div>}
+                    {(errorMessage) && <div><br/><div className="error-message">{errorMessage}</div></div>}
                     <input
                         type="submit"
                         className={`submit-button ${!feedbackText.length ? "disabled" : ""}`}
                         value="Enviar respuestas"
-                        disabled={!feedbackText.length}
                     />
                 </div>
             </CSSTransition>

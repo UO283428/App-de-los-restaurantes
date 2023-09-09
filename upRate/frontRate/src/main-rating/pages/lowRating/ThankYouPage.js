@@ -33,11 +33,11 @@ const ThankYouPage = () => {
   /**
    *  Fade-in Animation
    *  The thank-you message doesn't appear immediately when the component is rendered.
-   *  Instead, there's a short delay (50 milliseconds) before the message starts its fade-in animation.
+   *  Instead, there's a short delay (25 milliseconds) before the message starts its fade-in animation.
    *  This brief delay ensures that the animation is displayed correctly.
    */
   useEffect(() => {
-    const timer = setTimeout(() => setShow(true), 50);
+    const timer = setTimeout(() => setShow(true), 25);
     return () => clearTimeout(timer); // Clear timer on component unmount
   }, []);
 
@@ -45,7 +45,7 @@ const ThankYouPage = () => {
     <CSSTransition
       in={show}
       nodeRef={thanksMessageContainer}
-      timeout={300}
+      timeout={400}
       classNames="fade-in-down"
       unmountOnExit
     >

@@ -75,11 +75,7 @@ const RatingPage = () => {
 
     console.log("bulkData: ", bulkData);
 
-    if (rating > 3) {
-      navigate(URLSNAV.HIGH_FEEDBACK(id));
-    } else {
-      goToNextPage();
-    }
+    goToNextPage();
   };
 
   // Changes UI elements based on the rating value
@@ -99,7 +95,7 @@ const RatingPage = () => {
       } else {
         navigate(URLSNAV.LOW_RATING(id));
       }
-    }, 250);
+    }, 400);
   };
 
   // function that returns all the elements form the first page
@@ -108,7 +104,7 @@ const RatingPage = () => {
       <CSSTransition
         in={show}  
         nodeRef={ratingContainerRef}
-        timeout={300}
+        timeout={400}
         classNames="fade-in-up"
         unmountOnExit
         >
@@ -130,7 +126,7 @@ const RatingPage = () => {
       <CSSTransition
         in={show}
         nodeRef={buttonContainerRef}
-        timeout={300}
+        timeout={400}
         classNames="fade-in-up"
         unmountOnExit
         >
