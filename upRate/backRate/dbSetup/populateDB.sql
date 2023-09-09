@@ -1,5 +1,5 @@
 -- Inserting sample restaurants
-INSERT INTO restaurants (restaurant_id, name, header_image_link, logo_image_link, average_rating) VALUES
+INSERT INTO restaurants (restaurant_id, restaurant_name, header_image_link, logo_image_link, average_rating) VALUES
 (1, 'goikoGrill', 'https://www.justretail.news/wp-content/uploads/2021/08/Goiko-H2O-noticias-retail-2-scaled.jpg',
     'https://boldflowco.com/wp-content/uploads/2023/07/logo-goiko.png', 4.5),
 
@@ -41,18 +41,18 @@ INSERT INTO text_feedback (restaurant_id, feedback_text, feedback_date) VALUES
 (2, 'Great ambiance and service', '2023-09-02');
 
 -- Insert data for Providers
-INSERT INTO Providers (provider_id, baseurl, provider_image) VALUES
-(1, 'https://www.google.com/maps', 'google_maps.png'),
-(2, 'https://www.tripadvisor.com', 'tripadvisor.png'),
-(3, 'https://www.yelp.com', 'yelp.png'),
-(4, 'https://www.zomato.com', 'zomato.png'),
-(5, 'https://www.opentable.com', 'opentable.png'),
-(6, 'https://www.facebook.com', 'facebook.png'),
-(7, 'https://www.instagram.com', 'instagram.png'),
-(8, 'https://www.thefork.com', 'thefork.png');
+INSERT INTO providers (provider_id, provider_image) VALUES
+(1, 'https://logos-world.net/wp-content/uploads/2022/01/Google-Maps-Logo.png'),
+(2, 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/TripAdvisor_Logo.svg/2560px-TripAdvisor_Logo.svg.png'),
+(3, 'yelp.png'),
+(4, 'zomato.png'),
+(5, 'opentable.png'),
+(6, 'facebook.png'),
+(7, 'instagram.png'),
+(8, 'thefork.png');
 
 -- Insert data for RestaurantLinks
-INSERT INTO RestaurantLinks (link_id, restaurant_id, provider_id, full_url) VALUES
+INSERT INTO restaurantLinks (link_id, restaurant_id, provider_id, full_url) VALUES
 -- Links for Restaurant 1
 (1, 1, 1, 'https://www.google.com/maps/delicious_delights'),
 (2, 1, 2, 'https://www.tripadvisor.com/delicious_delights'),

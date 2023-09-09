@@ -18,11 +18,10 @@ const Header = () => {
   useEffect(() => {
     fetch(API_URLS.frontPageImage(id))
     .then(response => {
-        console.log(response);
         return response.json();
     })
     .then(data => {
-        setFrontPageImage(data.url);
+        setFrontPageImage(data.frontPageImageUrl);
     })
     .catch(error => {
         console.error("Error fetching front page image:", error);
@@ -32,11 +31,10 @@ const Header = () => {
 useEffect(() => {
   fetch(API_URLS.logoImage(id))
   .then(response => {
-      console.log(response);
       return response.json();
   })
   .then(data => {
-      setLogoImage(data.url);
+      setLogoImage(data.logoImageUrl);
   })
   .catch(error => {
       console.error("Error fetching front page image:", error);

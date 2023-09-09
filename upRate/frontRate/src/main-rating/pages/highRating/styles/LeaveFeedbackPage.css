@@ -20,3 +20,8 @@
     font-weight: 400;
     margin: 0 0 1em 0;
 }
+
+.cosas{
+    display: flex;
+    justify-content: center;
+}

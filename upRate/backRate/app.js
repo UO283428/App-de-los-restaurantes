@@ -8,7 +8,8 @@ const logger = require('morgan');
 const indexRouter = require('./routes/indexRouter');
 const usersRouter = require('./routes/users');
 const imageRouter = require('./routes/api-webapp/imageRoutes'); // added by me
-const questionsRouter = require('./routes/api-webapp/questionsRoutes'); // added by me
+const questionsRouter = require('./routes/api-webapp/questionRoutes'); // added by me
+const linkRouter = require('./routes/api-webapp/linkRoutes'); // added by me
 const JWTRouter = require('./routes/JWTRouter'); // added by me
 const jwtAuth = require('./middlewear/jwtAuth'); // added by me
 
@@ -34,6 +35,7 @@ app.use('/users', usersRouter);
 app.use('/', imageRouter);
 app.use('/', questionsRouter);
 app.use('/', JWTRouter); // added by me
+app.use('/', linkRouter); // added by me
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

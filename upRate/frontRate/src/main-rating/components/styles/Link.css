@@ -13,9 +13,12 @@
     padding: 0.5em 8em; /* Add padding to the container */
     text-align: center; /* Center text horizontally */
     text-decoration: none; /* Remove default underline on anchor tag */
-    margin: 0.5em 2em 1em 2em; /* Add margin for spacing */
+    margin: 0.5em 0 1em 0; /* Add margin for spacing */
     border: 2px solid #007BFF; /* Add a border and set its color */
     transition: background-color 0.3s, color 0.3s; /* Add a smooth transition effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   /* CSS for the link text */

@@ -11,6 +11,6 @@ const jwtAuth = jwt({
     }
     return null;
   }
-}).unless({ path: ['/generate-token', '/', '/users', '/api/front-page-image', '/api/logo-image', '/api/restaurant-questions'] }); // Exclude some routes
+}).unless({ path: ['/generate-token', '/', '/users', '/api/front-page-image', '/api/logo-image', '/api/restaurant-questions', '/api/restaurant-links'] }); // Exclude some routes
 
 module.exports = jwtAuth;

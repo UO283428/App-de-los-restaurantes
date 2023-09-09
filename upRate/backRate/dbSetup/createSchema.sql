@@ -6,7 +6,7 @@ USE uprateDB;
 
 CREATE TABLE restaurants (
     restaurant_id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
+    restaurant_name VARCHAR(255) NOT NULL,
     header_image_link VARCHAR(1024),
     logo_image_link VARCHAR(1024),
     average_rating FLOAT DEFAULT 0
@@ -40,8 +40,7 @@ CREATE TABLE text_feedback (
 
 CREATE TABLE providers (
     provider_id INT PRIMARY KEY,
-    baseurl VARCHAR(255),
-    provider_image VARCHAR(255) DEFAULT ''
+    provider_image VARCHAR(255) DEFAULT 'https://logos-world.net/wp-content/uploads/2022/01/Google-Maps-Logo.png'
 );
 
 CREATE TABLE restaurantLinks (

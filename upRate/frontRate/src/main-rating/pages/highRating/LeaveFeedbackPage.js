@@ -25,27 +25,7 @@ import './styles/LeaveFeedbackPage.css';
  */
 const LeaveFeedbackPage = () => {
   const { setHeaderAnimated, setHeaderExtended } = useContext(HeaderContext);
-  const [links, setLinks] = useState([{
-    id: "none",
-    src: "https://logos-world.net/wp-content/uploads/2022/01/Google-Maps-Logo.png",
-    url: "https://www.google.com",
-    show: false,
-  },  {
-    id: "none",
-    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/TripAdvisor_Logo.svg/2560px-TripAdvisor_Logo.svg.png",
-    url: "https://www.google.com",
-    show: false,
-  },  {
-    id: "none",
-    src: "https://logos-world.net/wp-content/uploads/2022/01/Google-Maps-Logo.png",
-    url: "https://www.google.com",
-    show: false,
-  },  {
-    id: "none",
-    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/TripAdvisor_Logo.svg/2560px-TripAdvisor_Logo.svg.png",
-    url: "https://www.google.com",
-    show: false,
-  },]);
+  const [links, setLinks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [show, setShow] = useState(false);
   const linksReference = React.useRef([]);
@@ -80,10 +60,10 @@ const LeaveFeedbackPage = () => {
     fetch(API_URLS.links(id))
       .then(response => response.json())
       .then(data => {
-        const fetchedLinks = data.links.map(link => ({
+        const fetchedLinks = data.linksArray.map(link => ({
           id: link.id,
-          content: link.content,
           url: link.url,
+          src: link.src,
           show: false
         }));
         setLinks(fetchedLinks);
@@ -93,7 +73,7 @@ const LeaveFeedbackPage = () => {
         console.error("Error fetching links:", error);
         setIsLoading(false);
       });
-  }, [id]);
+  }, []);
 
   /**
    *  Links Animation:
@@ -164,7 +144,7 @@ const LeaveFeedbackPage = () => {
               unmountOnExit
             >
               <div className="cosas" ref={linksReference.current[index]}>
-                <Link src={link.src} url={link.url} alt={link.content} />
+                <Link src={link.src} url={link.url} />
               </div>
             </CSSTransition>
           ))}

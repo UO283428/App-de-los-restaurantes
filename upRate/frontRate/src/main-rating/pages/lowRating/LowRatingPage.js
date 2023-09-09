@@ -25,7 +25,7 @@ const LowRatingPage = () => {
 
   const [questions, setQuestions] = useState([{
     id: "none",
-    content: "none",
+    text: "none",
     rating: 0,
     show: false,
   }]);
@@ -36,6 +36,8 @@ const LowRatingPage = () => {
    *  This useEffect handles both the animation of the questions and fetching the questions from an external API.
    */
   useEffect(() => {
+    setHeaderAnimated(false);
+    setHeaderExtended(false);
 
     /**
      *  Initially, it sets all questions to be hidden (show: false).
@@ -55,9 +57,9 @@ const LowRatingPage = () => {
       try {
         const response = await fetch(API_URLS.questions(id));
         const data = await response.json();
-        const fetchedQuestions = data.questions.map(q => ({
-          id: q.id,
-          content: q.content,
+        const fetchedQuestions = data.questionsSet.map(q => ({
+          id: q.question_id,
+          text: q.question_text,
           rating: 0,
           show: false,
         }));
@@ -126,8 +128,15 @@ const LowRatingPage = () => {
    *  @returns {function} - A function that sets the rating for a specific question.
    */
   const setRatingQ = (questionId) => (rating) => {
-    setQuestions(prevQuestions => prevQuestions.map(q => q.id === questionId ? { ...q, rating } : q));
-    setDisableButton(isAnyQuestionUnrated());
+    setQuestions(prevQuestions => {
+      const updatedQuestions = prevQuestions.map(q => q.id === questionId ? { ...q, rating } : q);
+      
+      // Checking whether any question is unrated based on the new, local state
+      const isUnrated = updatedQuestions.some(q => q.rating === 0);
+      setDisableButton(isUnrated);
+  
+      return updatedQuestions;
+    });
   };
 
   /**
@@ -159,7 +168,7 @@ const LowRatingPage = () => {
               unmountOnExit
             >
               <div className="rating-container">
-                <RatingQuestion mainText={question.content} setRating={setRatingQ(question.id)} />
+                <RatingQuestion mainText={question.text} setRating={setRatingQ(question.id)} />
                 {question.errorMessage && <div className="error-message">{question.errorMessage}</div>}
               </div>
             </CSSTransition>
