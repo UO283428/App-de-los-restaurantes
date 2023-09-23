@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-import { UserContext } from "../../UserContext";
+import UserContext from "../../UserContext";
 import Text from "../components/Text";
 import CustomStarIcon from "../components/CustomStarIcon";
 import { URLSNAV } from "../constants/urls";
@@ -48,6 +48,13 @@ const RatingPage = () => {
   }, []);
 
   useEffect(() => {
+    setBulkData(prevData => ({
+      ...prevData,
+      id: id,
+    }));
+  }, []);
+
+  useEffect(() => {
     console.log("bulkData: ", bulkData);
   }, []);
 
@@ -76,9 +83,6 @@ const RatingPage = () => {
     goToNextPage();
   };
 
-  useEffect(() => {
-    console.log("bulkData: ", bulkData);
-  }, [bulkData]);
 
 
   // Changes UI elements based on the rating value

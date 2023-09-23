@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Text from '../../components/Text';
 import { URLSNAV } from '../../constants/urls'; // Unused in this component. Consider removing if not needed.
 import { HeaderContext } from '../../../HeaderContext';
-import { UserContext } from '../../../UserContext';
+import UserContext from '../../../UserContext';
 import './styles/ThankYouPage.css';
 
 

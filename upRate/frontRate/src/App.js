@@ -1,7 +1,7 @@
 import './App.css';
 import {useState, lazy, Suspense, useEffect} from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { UserContext } from './UserContext';
+import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
+import { UserProvider } from './UserContext';
 import { HeaderContext } from './HeaderContext';
 import MainLayout from './main-rating/layouts/MainLayout';
 import LowRatingPage from './main-rating/pages/lowRating/LowRatingPage';
@@ -26,39 +26,14 @@ const ThankYouPage = lazy(() => import('./main-rating/pages/lowRating/ThankYouPa
 
 
 function App() {
-
-  const [lastPagePath, setLastPagePath] = useState('');
-  const [jwtToken, setJwtToken] = useState('');
-  const [bulkData, setBulkData] = useState({
-      generalRating: 0,
-      questions: [],
-      finalText: ''
-  });
+  const { id } = useParams();
 
   const [isHeaderAnimated, setHeaderAnimated] = useState(false);
   const [isHeaderExtended, setHeaderExtended] = useState(false);
 
-  useEffect(() => {
-    const fetchToken = async () => {
-        try {
-            const response = await fetch(API_URLS.token);
-            const data = await response.json();
-            setJwtToken(data.token);
-        } catch (error) {
-            console.error("Error fetching the token:", error);
-        }
-    };
-
-    fetchToken();
-  }, []);
-
   return (
     <HeaderContext.Provider value={{ isHeaderAnimated, setHeaderAnimated, isHeaderExtended, setHeaderExtended }}>
-      <UserContext.Provider value={{ 
-            lastPagePath, setLastPagePath, 
-            jwtToken, setJwtToken, 
-            bulkData, setBulkData
-       }}>
+      <UserProvider>
         <Router>
           <Suspense fallback={<div>Loading...</div>}>
             <Routes>
@@ -72,7 +47,7 @@ function App() {
             </Routes>
           </Suspense>
         </Router>
-      </UserContext.Provider>
+      </UserProvider>
     </HeaderContext.Provider>
   );
 }

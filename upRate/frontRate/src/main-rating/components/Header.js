@@ -1,10 +1,11 @@
 import React, {useEffect, useState, useContext} from "react";
-import { UserContext } from "../../UserContext";
+import UserContext from "../../UserContext";
 import { HeaderContext } from "../../HeaderContext";
 import { API_URLS } from "../../config";
 import Image from "./Image";
 import Logo from "./Logo";
 import "./styles/Header.css";
+import { useParams } from "react-router-dom";
 
 const Header = () => {
 
@@ -13,7 +14,7 @@ const Header = () => {
   const {user, setUser} = useContext(UserContext);
   const {isHeaderAnimated, isHeaderExtended} = useContext(HeaderContext);
   // Get the id from the url subdomain.basedomain.es/id/...
-  const id = window.location.pathname.split('/')[1];
+  const { id } = useParams();
 
   useEffect(() => {
     fetch(API_URLS.frontPageImage(id))

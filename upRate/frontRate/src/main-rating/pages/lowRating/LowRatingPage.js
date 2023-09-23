@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-import { UserContext } from "../../../UserContext";
+import UserContext from "../../../UserContext";
 import Text from "../../components/Text";
 import { URLSNAV } from "../../constants/urls";
 import { API_URLS } from "../../../config";

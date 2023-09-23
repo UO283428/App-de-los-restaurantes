@@ -1,11 +1,11 @@
 // urls.js
 // This file contains the urls for the different pages in the webApp. It is used to navigate
 export const URLS = {
-  RATING: ":id",
-  HIGH_FEEDBACK: ":id/high-feedback",
-  LOW_RATING: ":id/low-rating",
-  LOW_FEEDBACK: ":id/low-feedback",
-  LOW_THANX: ":id/low-thanx",
+  RATING: "app/:id",
+  HIGH_FEEDBACK: "app/:id/high-feedback",
+  LOW_RATING: "app/:id/low-rating",
+  LOW_FEEDBACK: "app/:id/low-feedback",
+  LOW_THANX: "app/:id/low-thanx",
 };
 
 // This file contains the urls for the different pages in the webApp. It is used to navigate
@@ -20,8 +20,8 @@ export const URLSNAV = {
 // This file contains the urls for the different pages in the webApp using relative ones
 export const URLSREL = {
     RATING: "/",
-    HIGH_FEEDBACK: URLS.HIGH_FEEDBACK.split("/")[1], //high-feedback
-    LOW_RATING: URLS.LOW_RATING.split("/")[1], //low-rating
-    LOW_FEEDBACK: URLS.LOW_FEEDBACK.split("/")[1], //low-feedback
-    LOW_THANX: URLS.LOW_THANX.split("/")[1], //low-thanx
+    HIGH_FEEDBACK: URLS.HIGH_FEEDBACK.split("/")[2], //high-feedback
+    LOW_RATING: URLS.LOW_RATING.split("/")[2], //low-rating
+    LOW_FEEDBACK: URLS.LOW_FEEDBACK.split("/")[2], //low-feedback
+    LOW_THANX: URLS.LOW_THANX.split("/")[2], //low-thanx
   };
