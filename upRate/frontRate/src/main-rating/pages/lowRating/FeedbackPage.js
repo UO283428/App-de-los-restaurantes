@@ -21,6 +21,8 @@ const FeedbackPage = () => {
     const [feedbackText, setFeedbackText] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [show, setShow] = useState(false);
+
+    const [isBulkDataUpdated, setIsBulkDataUpdated] = useState(false);
     
     const navigate = useNavigate();
     const { id } = useParams();
@@ -118,45 +120,42 @@ const FeedbackPage = () => {
         goToNextPage();
     };
 
-    const handleDataOperation = async () => {
-        await updateBulkData();
-        await sendBulkData();
-        await console.log(bulkData);
+    // A new useEffect to watch for bulkData changes
+    useEffect(() => {
+        if (isBulkDataUpdated) {  // if flag is set
+            sendBulkData();
+            console.log(bulkData);  // Should reflect updated state
+            setIsBulkDataUpdated(false);  // Reset flag
+        }
+    }, [bulkData, isBulkDataUpdated]);  // Watch for changes in bulkData and isBulkDataUpdated
+
+    const handleDataOperation = () => {
+        updateBulkData();
+        setIsBulkDataUpdated(true);  // Set flag to indicate data should be sent
     };
 
-    /**
-     * Updates the context data (bulkData) with the current feedback and information about the last page.
-     */
     const updateBulkData = () => {
         setBulkData(prevData => ({
             ...prevData,
             finalText: feedbackText,
             lastPage: URLSNAV.LOW_FEEDBACK(id)
         }));
-    }
+    };
 
-    /**
-     * Sends the bulk data to the backend.
-     */
-    const sendBulkData = () => {
-        fetch(API_URLS.bulkData(id), {
+    // As before, or similar
+    const sendBulkData = async () => {
+        const response = await fetch(API_URLS.bulkData(id), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({bulkData: bulkData})
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to send bulk data');
-            }
-            // handle successful response
-        })
-        .catch(error => {
-            console.error(error);
-            // handle error
+            body: JSON.stringify({ bulkData: bulkData })
         });
-    }
+
+        if (!response.ok) {
+            throw new Error('Failed to send bulk data');
+        }
+    };
 
     /**
      * Triggers necessary animations for the header and feedback form.
