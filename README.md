@@ -1,5 +1,12 @@
 # App-de-los-restaurantes
-Proyecto bajo construcción que no está finalizado.
+UpRate application is a React-based single page application that dynamically customizes content based on the provided ID in the URL. It offers a personalized user experience with smooth animations. The app collects and stores user feedback in a database using a dedicated API, the same that provides with the photos and questions.
+
+<img src="https://github.com/UO283428/App-de-los-restaurantes/assets/74626888/b7977984-8de2-43cc-9c9c-7ea9b5d0d941" width="300" height="auto" alt="Screenshot 1">
+<img src="https://github.com/UO283428/App-de-los-restaurantes/assets/74626888/84087ead-b9ff-42f5-b1be-3763d2971d21" width="300" height="auto" alt="Screenshot 3">
+<img src="https://github.com/UO283428/App-de-los-restaurantes/assets/74626888/147d3e72-f3b0-4d7c-8eac-b976a8629177" width="300" height="auto" alt="Screenshot 2">
+
+
+This is not a finished proyect.
 
 
 This documentation is inaccurate and outdated.
