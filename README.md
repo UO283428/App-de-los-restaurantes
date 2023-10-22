@@ -1,7 +1,9 @@
 # App-de-los-restaurantes
 Proyecto bajo construcción que no está finalizado.
 
-Introduction and Goals:
+
+This documentation is inaccurate and outdated.
+# Introduction and Goals:
 
 UpRate is a SaaS (Software As a Service) platform designed to enable businesses to manage and improve their customer ratings and reviews on external platforms such as Google Maps, TripAdvisor, and Yelp. By allowing customers to give negative feedback directly to business owners and positive feedback on public platforms, we strive to create a beneficial environment for both business owners and customers. 
 
@@ -10,7 +12,7 @@ UpRate is a SaaS (Software As a Service) platform designed to enable businesses 
 •	Technical Goals: Create a responsive, user-friendly, visually appealing application that prioritizes user experience.
 
 
-Constraints:
+# Constraints:
 
 •	Compliance with GDPR and other data protection laws.
 •	Responsive and mobile-friendly design.
@@ -18,12 +20,12 @@ Constraints:
 •	Deployment on 20i platform.
 
 
-Context and Scope:
+# Context and Scope:
 
 The system interfaces with external review platforms like Google Maps, TripAdvisor, Yelp for retrieving and posting reviews. There are two primary user roles - business owners who create profiles and manage feedback, and customers who provide reviews. 
 
 
-Solution Strategy:
+# Solution Strategy:
 
 We will use the MERN stack (with MySQL replacing MongoDB) for application development. React.js will handle the frontend, Node.js and Express.js for the backend, and MySQL for the database. The application will be hosted on the 20i platform.
 
@@ -56,7 +58,7 @@ The relationships would be:
 
 
 
-Building Block View:
+# Building Block View:
 
 Our application is composed of the following main building blocks:
 
@@ -65,40 +67,40 @@ Our application is composed of the following main building blocks:
 •	Database: MySQL database storing business owner and review data.
 
 
-Runtime View:
+# Runtime View:
 
 Major scenarios like user login, posting a review, and creating a business profile will be depicted using sequence diagrams, showing the interaction between the different components of our application.
 
 
-Deployment View:
+# Deployment View:
 
 The application will be deployed in a Linux environment hosted on the 20i platform. The backend, frontend, and MySQL database will all be hosted on the same platform but may be on separate instances for scaling purposes.
 
 
-Cross-cutting Concepts:
+# Cross-cutting Concepts:
 
 The system will incorporate security measures such as data encryption and secure HTTP. Error handling will be implemented across the system to ensure stability and data integrity.
 
 
-Architectural Decisions:
+# Architectural Decisions:
 
 •	Decision to use MERN stack: This allows us to have a unified language (JavaScript) across the stack, and React offers a robust framework for building interactive UIs.
 •	Decision to use MySQL: A relational database is more suited for our data model and MySQL is a well-supported, robust solution. Constraint from the service provider but wanted a relational data base.
 
 
-Quality Requirements:
+# Quality Requirements:
 
 •	Performance: The application should load quickly and perform smoothly.
 •	Usability: The application should be intuitive and easy to use.
 •	Security: Data protection and privacy should be assured at all times.
 •	Availability: The service should be available with minimum downtime.
 
-Risks and Technical Debt:
+# Risks and Technical Debt:
 
 •	Technical Debt: If we need to rush certain features, we may accrue technical debt that will need to be addressed in future iterations.
 •	Risks: Data breaches, non-compliance with legal requirements, service downtime.
 
-Glossary:
+# Glossary:
 
 •	SaaS: Software as a Service.
 •	MERN: MongoDB, Express, React, Node.js stack.
