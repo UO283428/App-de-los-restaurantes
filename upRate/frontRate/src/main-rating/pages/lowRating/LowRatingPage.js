@@ -36,6 +36,9 @@ const LowRatingPage = () => {
    *  This useEffect handles both the animation of the questions and fetching the questions from an external API.
    */
   useEffect(() => {
+    if (bulkData.isSent) {
+      navigate(URLSNAV.LOW_THANX(id));
+    }
     setHeaderAnimated(false);
     setHeaderExtended(false);
 

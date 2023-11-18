@@ -23,6 +23,9 @@ const RatingPage = () => {
 
   // This is to set the header as extended and not animated when the page is loaded.
   useEffect(() => {
+    if (bulkData.isSent) {
+      navigate(URLSNAV.LOW_THANX(id));
+    }
     setHeaderExtended(true);
     setHeaderAnimated(false);
   }, []);

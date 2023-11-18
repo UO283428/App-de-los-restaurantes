@@ -32,6 +32,9 @@ const FeedbackPage = () => {
      * Sets the initial state of the header and trigger the fade-in animation of the feedback form when the component is mounted.
      */
     useEffect(() => {
+        if (bulkData.isSent) {
+          navigate(URLSNAV.LOW_THANX(id));
+        }
         setHeaderState();
         initializeAnimation();
     }, []);
@@ -144,6 +147,11 @@ const FeedbackPage = () => {
 
     // As before, or similar
     const sendBulkData = async () => {
+        // Update the bulk data adding a boolean that is sent
+        setBulkData(prevData => ({
+            ...prevData,
+            isSent: true
+        }));
         const response = await fetch(API_URLS.bulkData(id), {
             method: 'POST',
             headers: {
